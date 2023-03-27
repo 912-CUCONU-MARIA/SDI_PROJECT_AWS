@@ -4,10 +4,12 @@ import com.example.lab1.model.dto.PlayerCharacterDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
+
 
 @Entity
 public class PlayerCharacter {
@@ -16,10 +18,14 @@ public class PlayerCharacter {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Name should not be blank")
     private String pc_name;
 
+    @Min(value = 0, message = "Level should not be less than 0")
+    @Max(value = 150, message = "Level should not be greater than 99999")
     private Long level;
 
+    @Min(value = 0, message = "Experience should not be less than 0")
     private Long experience;
 
     private Long classId;

@@ -7,12 +7,17 @@ import com.example.lab1.model.dto.PlayerCharacterDto;
 import com.example.lab1.model.dto.PlayerCharacterDtoWUserObject;
 import com.example.lab1.repository.PlayerCharacterRepository;
 import com.example.lab1.service.PlayerCharacterService;
-import com.speedment.jpastreamer.application.JPAStreamer;
+//import com.speedment.jpastreamer.application.JPAStreamer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,7 +47,7 @@ public class PlayerCharacterController {
         return ResponseEntity.ok(playerCharacterDtoResponse);
     }
 
-    @GetMapping("/playercharacters/level/{level}")
+    @GetMapping("/playercharacters/levelGreaterThan/{level}")
     public ResponseEntity<List<PlayerCharacterDto>> getPlayerCharacterBiggerLevel(@PathVariable(value = "level") Long level) throws MyException {
         return ResponseEntity.ok(playerCharacterService.getPlayerCharactersLevelGreaterThan(level));
     }
@@ -77,5 +82,15 @@ public class PlayerCharacterController {
     }
 
     //.reversed for comparator order
-
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+//        Map<String, String> errors = new HashMap<>();
+//        ex.getBindingResult().getAllErrors().forEach((error) -> {
+//            String fieldName = ((FieldError) error).getField();
+//            String errorMessage = error.getDefaultMessage();
+//            errors.put(fieldName, errorMessage);
+//        });
+//        return errors;
+//    }
 }

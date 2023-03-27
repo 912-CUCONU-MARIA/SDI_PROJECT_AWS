@@ -8,6 +8,7 @@ import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.GameUserDtoWPlayerChObject;
 import com.example.lab1.repository.GameUserRepository;
 import jakarta.transaction.Transactional;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,15 @@ import java.util.stream.Collectors;
 @Service
 public class GameUserService {
 
-    private final GameUserRepository gameUserRepository;
+    //this was final before
+    private GameUserRepository gameUserRepository;
 
     @Autowired//Spring injects the repositories when the service is created.
     public GameUserService(GameUserRepository gameUserRepository) {
         this.gameUserRepository = gameUserRepository;
     }
+
+    public void setGameUserRepository(GameUserRepository newGameUserRepository){this.gameUserRepository=newGameUserRepository;}
 
     public GameUserDto addGameUser(GameUserDto gameUserDto)
     {
@@ -84,7 +88,6 @@ public class GameUserService {
     }
 
 }
-
         /*
         List<Pair<PlayerCharacter, Integer>> sortedPlayerCharacters =
     playerCharacters.stream()

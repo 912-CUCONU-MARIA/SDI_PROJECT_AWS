@@ -13,10 +13,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,13 +22,13 @@ public class PlayerCharacterService {
 
     private final PlayerCharacterRepository playerCharacterRepository;
     private final GameUserRepository gameUserRepository;
-    
+
     @Autowired
     public PlayerCharacterService(PlayerCharacterRepository playerCharacterRepository, GameUserRepository gameUserRepository) {
         this.playerCharacterRepository = playerCharacterRepository;
         this.gameUserRepository = gameUserRepository;
     }
-    
+
     public PlayerCharacterDto addPlayerCharacter(PlayerCharacterDto playerCharacterDto){
         //todo handle in case of error
         //System.out.println(playerCharacterDto.toString());
@@ -87,6 +85,19 @@ public class PlayerCharacterService {
         return PlayerCharacterDto.from(playerCharacterToUpdate);
     }
 
+    //simpler show all playercharacters sorted by their number of items
+    //the dto name is scuffed, I just reused it from the below function
+    public List<PlayerCharacterAndNumberOfOtherPlayerCharactersDto> getPlayerCharacterSortedByNumberOfItems(){
+        List<PlayerCharacterAndNumberOfOtherPlayerCharactersDto> playerCharacterSortedByNumberOfItemsDtos=playerCharacterRepository.findAll()
+                .stream()
+                .map(pc->PlayerCharacterAndNumberOfOtherPlayerCharactersDto.from(pc, (long) pc.getPlayerCharacterItemSet().size()))
+                .sorted(Comparator.comparing(PlayerCharacterAndNumberOfOtherPlayerCharactersDto::getNumberOfOtherPlayerCharacters))
+                .collect(Collectors.toList());
+
+        return playerCharacterSortedByNumberOfItemsDtos;
+    }
+
+
     //show all playercharacters sorted by number of other playercharacters its items belong to
     public List<PlayerCharacterAndNumberOfOtherPlayerCharactersDto> getPlayerCharactersSortedByNumberOfOtherPlayerCharacters(){
 
@@ -114,6 +125,8 @@ public class PlayerCharacterService {
         return (long)otherPlayers.size();
 
     }
+
+
 
 
 }
