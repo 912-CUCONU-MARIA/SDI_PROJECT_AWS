@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -49,6 +50,19 @@ public class PlayerCharacterItemService {
 
         return PlayerCharacterItemDto.from(addedPlayerCharacterItem);
 
+    }
+
+    public List<PlayerCharacterItemDto> addItemsToPlayerCharacter(List<PlayerCharacterItemDto> playerCharacterItemsDtos,Long idPlayerCharacter)
+    {
+        List<PlayerCharacterItemDto> returnedItemsList=new ArrayList<>();
+        for(PlayerCharacterItemDto pcid:playerCharacterItemsDtos)
+        {
+            PlayerCharacterItem playerCharacterItem=PlayerCharacterItem.from(pcid);
+            PlayerCharacterItemDto playerCharacterItemDto=PlayerCharacterItemDto.from(playerCharacterItem);
+            PlayerCharacterItemDto playerCharacterItemDtoSaved=this.addItemToPlayerCharacter(playerCharacterItemDto, idPlayerCharacter,pcid.getId());
+            returnedItemsList.add(playerCharacterItemDtoSaved);
+        }
+        return returnedItemsList;
     }
 
     public List<PlayerCharacterItemDto> getPlayerCharacterItemDtos(){

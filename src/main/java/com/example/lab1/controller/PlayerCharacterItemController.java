@@ -44,6 +44,16 @@ POST /players/1/items/1 and in json specify additional attr: is_equipped and upg
             return ResponseEntity.ok(playerCharacterItemDtoResponse);
         }
 
+        //add items to player character in bulk
+        //id item, its extra stuff from intermediary table
+        //id item, its extra stuff from intermediary table
+        @PostMapping("/playercharacters/{playerChId}/items")
+        public ResponseEntity<List<PlayerCharacterItemDto>> addItemsToPlayerCharacter(@PathVariable(value = "playerChId") Long playerChId, @RequestBody final List<PlayerCharacterItemDto> playerCharacterItemsDtoRequest){
+            //PlayerCharacterItemDto playerCharacterItemDtoResponse=playerCharacterItemService.addItemToPlayerCharacter(playerCharacterItemDtoRequest,playerChId,itemId);
+            List<PlayerCharacterItemDto> playerCharacterItemsDtoResponse=playerCharacterItemService.addItemsToPlayerCharacter(playerCharacterItemsDtoRequest,playerChId);
+            return ResponseEntity.ok(playerCharacterItemsDtoResponse);
+        }
+
         @PutMapping("playercharacters/{playerChId}/items/{pciId}")
         public ResponseEntity<PlayerCharacterItemDto> updateItemOfPlayerCharacter(@PathVariable(value = "playerChId") Long playerChId,@PathVariable(value = "pciId") Long pciId, @RequestBody final PlayerCharacterItemDto playerCharacterItemDtoRequest) throws MyException {
             PlayerCharacterItemDto playerCharacterItemDtoResponse=playerCharacterItemService.updateItemOfPlayerCharacter(playerChId,pciId,playerCharacterItemDtoRequest);
