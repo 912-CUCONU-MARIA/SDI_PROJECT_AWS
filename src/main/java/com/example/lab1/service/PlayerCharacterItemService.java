@@ -60,6 +60,7 @@ public class PlayerCharacterItemService {
             PlayerCharacterItem playerCharacterItem=PlayerCharacterItem.from(pcid);
             PlayerCharacterItemDto playerCharacterItemDto=PlayerCharacterItemDto.from(playerCharacterItem);
             PlayerCharacterItemDto playerCharacterItemDtoSaved=this.addItemToPlayerCharacter(playerCharacterItemDto, idPlayerCharacter,pcid.getId());
+            //playerCharacterItemDtoSaved.setId(pcid.getId()); in case I want to see like in Response body
             returnedItemsList.add(playerCharacterItemDtoSaved);
         }
         return returnedItemsList;
