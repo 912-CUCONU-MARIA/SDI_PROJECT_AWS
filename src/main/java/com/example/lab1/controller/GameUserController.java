@@ -106,9 +106,17 @@ public class GameUserController {
     //player character and average
     //sorted(Comparator.comparing(author->author.getNoBooks()))
     //Show all Gameusers ordered by the average level of their PlayerCharacters
-    public ResponseEntity<List<GameUserAveragePlayerCharacterLevelDto>> getGameUsersOrderedByAverageLevelOfPlayerCharacters(){
-        return ResponseEntity.ok(gameUserService.getGameUsersOrderedByAverageLevelOfPlayerCharacters());
+//    public ResponseEntity<List<GameUserAveragePlayerCharacterLevelDto>> getGameUsersOrderedByAverageLevelOfPlayerCharacters(){
+//        return ResponseEntity.ok(gameUserService.getGameUsersOrderedByAverageLevelOfPlayerCharacters());
+//    }
+    public ResponseEntity<Page<GameUserAveragePlayerCharacterLevelDto>> getGameUsersOrderedByAverageLevelOfPlayerCharacters(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(gameUserService.getGameUsersOrderedByAverageLevelOfPlayerCharacters(pageable));
     }
+
 
 }
 /*

@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,8 @@ public class GameUserService {
         return gameUserRepository.findAll(pageable)
                 .map(GameUserDto::from);
     }
+
+
     public List<GameUserDto> getGameUsersDto(){
         return gameUserRepository.findAll().stream().map(GameUserDto::from).collect(Collectors.toList());
     }
@@ -93,6 +96,45 @@ public class GameUserService {
                                 )
                 .collect(Collectors.toList());
     }
+    //with pages
+//    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+//        Page<GameUser> gameUserPage = gameUserRepository.findAll(pageable);
+//
+//        List<GameUserAveragePlayerCharacterLevelDto> gameUserAveragePlayerCharacterLevelDtoList = gameUserPage.stream()
+//                .sorted(Comparator.comparing(gameUser -> gameUser.getPlayerCharacterSet().stream()
+//                        .mapToLong(PlayerCharacter::getLevel)
+//                        .average()
+//                        .orElse(0)))
+//                .map(gameUser -> GameUserAveragePlayerCharacterLevelDto.from(gameUser, (long) gameUser.getPlayerCharacterSet().stream()
+//                        .mapToLong(PlayerCharacter::getLevel)
+//                        .average()
+//                        .orElse(0)))
+//                .collect(Collectors.toList());
+//
+//        return new PageImpl<>(gameUserAveragePlayerCharacterLevelDtoList, pageable, gameUserPage.getTotalElements());
+//    }
+    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+        List<GameUser> allGameUsers = gameUserRepository.findAll();
+
+        List<GameUserAveragePlayerCharacterLevelDto> sortedGameUserDtos = allGameUsers.stream()
+                .sorted(Comparator.comparing(gameUser -> gameUser.getPlayerCharacterSet().stream()
+                        .mapToLong(PlayerCharacter::getLevel)
+                        .average()
+                        .orElse(0)))
+                .map(gameUser -> GameUserAveragePlayerCharacterLevelDto.from(gameUser, (long) gameUser.getPlayerCharacterSet().stream()
+                        .mapToLong(PlayerCharacter::getLevel)
+                        .average()
+                        .orElse(0)))
+                .collect(Collectors.toList());
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), sortedGameUserDtos.size());
+        List<GameUserAveragePlayerCharacterLevelDto> pagedGameUserDtos = sortedGameUserDtos.subList(start, end);
+
+        return new PageImpl<>(pagedGameUserDtos, pageable, sortedGameUserDtos.size());
+    }
+
+
 
 }
         /*
