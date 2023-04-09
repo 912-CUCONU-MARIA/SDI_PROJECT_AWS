@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,14 +33,44 @@ public class GameUserController {
 //    }
 
     //with pages
+//    @GetMapping()
+//    public ResponseEntity<Page<GameUserDto>> getAllGameUsers(
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "size", defaultValue = "10") int size) {
+//
+//        Pageable pageable = PageRequest.of(page, size);
+//        return ResponseEntity.ok(gameUserService.getGameUsersDto(pageable));
+//    }
+    //with pages2
+//    @GetMapping()
+//    public ResponseEntity<Page<GameUserDto>> getAllGameUsers(
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "size", defaultValue = "10") int size,
+//            @RequestParam(name = "sort", defaultValue = "firstName") String sort,
+//            @RequestParam(name = "direction", defaultValue = "asc") String direction) {
+//
+//        Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(direction), sort);
+//        return ResponseEntity.ok(gameUserService.getGameUsersDto(pageable));
+//    }\
+    //with pages2 OPTIONAL sort
     @GetMapping()
     public ResponseEntity<Page<GameUserDto>> getAllGameUsers(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size) {
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sort", required = false) String sort,
+            @RequestParam(name = "direction", required = false) String direction) {
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable;
+        if (sort != null && direction != null) {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString(direction), sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
         return ResponseEntity.ok(gameUserService.getGameUsersDto(pageable));
     }
+
+
 
     //get gameusers with all playercharacter info
     @GetMapping("/{id}")
