@@ -22,7 +22,7 @@ public class PlayerCharacter {
     private String pc_name;
 
     @Min(value = 0, message = "Level should not be less than 0")
-    @Max(value = 150, message = "Level should not be greater than 99999")
+    //@Max(value = 150, message = "Level should not be greater than 99999")
     private Long level;
 
     @Min(value = 0, message = "Experience should not be less than 0")

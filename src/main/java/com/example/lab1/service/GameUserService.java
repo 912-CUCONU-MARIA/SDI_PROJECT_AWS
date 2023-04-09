@@ -10,6 +10,8 @@ import com.example.lab1.repository.GameUserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -34,6 +36,11 @@ public class GameUserService {
         return GameUserDto.from(gameUserRepository.save(GameUser.from(gameUserDto)));
     }
 
+    //this with pages
+    public Page<GameUserDto> getGameUsersDto(Pageable pageable){
+        return gameUserRepository.findAll(pageable)
+                .map(GameUserDto::from);
+    }
     public List<GameUserDto> getGameUsersDto(){
         return gameUserRepository.findAll().stream().map(GameUserDto::from).collect(Collectors.toList());
     }

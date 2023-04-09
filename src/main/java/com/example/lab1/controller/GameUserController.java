@@ -6,6 +6,9 @@ import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.GameUserDtoWPlayerChObject;
 import com.example.lab1.service.GameUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +26,19 @@ public class GameUserController {
 
     //@GetMapping("/gameusers")
     //get only gameusers info
+//    @GetMapping()
+//    public ResponseEntity<List<GameUserDto>> getAllGameUsers(){
+//        return ResponseEntity.ok(gameUserService.getGameUsersDto());
+//    }
+
+    //with pages
     @GetMapping()
-    public ResponseEntity<List<GameUserDto>> getAllGameUsers(){
-        //List<GameUser> gameUsers=gameUserService.getGameUsers();
-        //List<GameUserDto> gameUserDtos=gameUsers.stream().map(GameUserDto::from).collect(Collectors.toList());
-        return ResponseEntity.ok(gameUserService.getGameUsersDto());
+    public ResponseEntity<Page<GameUserDto>> getAllGameUsers(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(gameUserService.getGameUsersDto(pageable));
     }
 
     //get gameusers with all playercharacter info
