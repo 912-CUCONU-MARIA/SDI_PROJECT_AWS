@@ -82,20 +82,20 @@ public class GameUserService {
     }
 
 
-    public List<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(){
-        List<GameUser> gameUsers=gameUserRepository.findAll();
-        return gameUsers.stream()
-                .sorted(Comparator.comparing(gameUser->gameUser.getPlayerCharacterSet().stream()
-                                                                                        .mapToLong(PlayerCharacter::getLevel)
-                                                                                        .average()
-                                                                                        .orElse(0)))
-                            .map(gameUser -> GameUserAveragePlayerCharacterLevelDto.from(gameUser, (long) gameUser.getPlayerCharacterSet().stream()
-                                                                                                                                        .mapToLong(PlayerCharacter::getLevel)
-                                                                                                                                        .average()
-                                                                                                                                        .orElse(0))
-                                )
-                .collect(Collectors.toList());
-    }
+//    public List<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(){
+//        List<GameUser> gameUsers=gameUserRepository.findAll();
+//        return gameUsers.stream()
+//                .sorted(Comparator.comparing(gameUser->gameUser.getPlayerCharacterSet().stream()
+//                                                                                        .mapToLong(PlayerCharacter::getLevel)
+//                                                                                        .average()
+//                                                                                        .orElse(0)))
+//                            .map(gameUser -> GameUserAveragePlayerCharacterLevelDto.from(gameUser, (long) gameUser.getPlayerCharacterSet().stream()
+//                                                                                                                                        .mapToLong(PlayerCharacter::getLevel)
+//                                                                                                                                        .average()
+//                                                                                                                                        .orElse(0))
+//                                )
+//                .collect(Collectors.toList());
+//    }
     //with pages
 //    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
 //        Page<GameUser> gameUserPage = gameUserRepository.findAll(pageable);
