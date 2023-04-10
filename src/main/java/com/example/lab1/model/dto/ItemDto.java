@@ -17,6 +17,8 @@ public class ItemDto {
 
     private Long itemLevel;
 
+    private String description;
+
     public static ItemDto from(Item item){
 
         ItemDto itemDto=new ItemDto();
@@ -26,6 +28,7 @@ public class ItemDto {
         itemDto.setItemType(item.getItemType());
         itemDto.setItemEffect(item.getItemEffect());
         itemDto.setItemLevel(item.getItemLevel());
+        itemDto.setDescription(item.getDescription());
 
         return itemDto;
     }

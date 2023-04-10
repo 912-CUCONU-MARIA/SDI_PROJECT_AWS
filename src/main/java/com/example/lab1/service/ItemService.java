@@ -47,6 +47,7 @@ public class ItemService {
         itemToUpdate.setItemType(newItemDto.getItemType());
         itemToUpdate.setItemEffect(newItemDto.getItemEffect());
         itemToUpdate.setItemLevel(newItemDto.getItemLevel());
+        itemToUpdate.setDescription(newItemDto.getDescription());
 
         return ItemDto.from(itemToUpdate);
     }

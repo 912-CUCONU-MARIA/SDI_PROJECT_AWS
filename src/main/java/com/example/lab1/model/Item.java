@@ -24,6 +24,8 @@ public class Item {
 
     private Long itemLevel;
 
+    private String description;
+
 
     /*
         @OneToMany(mappedBy="gameUser" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
@@ -38,12 +40,13 @@ public class Item {
     public Item() {
     }
 
-    public Item(String itemName, String itemRarity, String itemType, String itemEffect, Long itemLevel) {
+    public Item(String itemName, String itemRarity, String itemType, String itemEffect, Long itemLevel, String description) {
         this.itemName = itemName;
         this.itemRarity = itemRarity;
         this.itemType = itemType;
         this.itemEffect = itemEffect;
         this.itemLevel = itemLevel;
+        this.description=description;
     }
 
     public Long getId() {
@@ -102,6 +105,14 @@ public class Item {
         this.playerCharacterItemSet = playerCharacterItemSet.stream().collect(Collectors.toSet());
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -111,8 +122,11 @@ public class Item {
                 ", itemType='" + itemType + '\'' +
                 ", itemEffect='" + itemEffect + '\'' +
                 ", itemLevel=" + itemLevel +
+                ", description='" + description + '\'' +
+                ", playerCharacterItemSet=" + playerCharacterItemSet +
                 '}';
     }
+
 
     public static Item from(ItemDto itemDto){
         Item item=new Item();
@@ -121,6 +135,7 @@ public class Item {
         item.setItemType(itemDto.getItemType());
         item.setItemEffect(itemDto.getItemEffect());
         item.setItemLevel(itemDto.getItemLevel());
+        item.setDescription(itemDto.getDescription());
 
         return item;
     }
