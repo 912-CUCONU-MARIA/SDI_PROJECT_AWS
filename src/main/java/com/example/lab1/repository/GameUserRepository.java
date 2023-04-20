@@ -19,20 +19,6 @@ public interface GameUserRepository extends JpaRepository<GameUser,Long> {
             countQuery = "SELECT COUNT(DISTINCT g.id) FROM game_user g JOIN player_character pc ON g.id = pc.game_user_id",
             nativeQuery = true)
     Page<Object[]> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable);
-
-    //maybe even faster impl
-    @Query(value = "WITH cte AS (" +
-            "  SELECT g.id, g.active_status, g.email_address, g.first_name, g.last_name, g.password, g.username, AVG(pc.level) AS average_level, " +
-            "         ROW_NUMBER() OVER (ORDER BY AVG(pc.level) DESC) row_num " +
-            "  FROM game_user g " +
-            "  JOIN player_character pc ON g.id = pc.game_user_id " +
-            "  GROUP BY g.id " +
-            ") " +
-            "SELECT * FROM cte WHERE row_num BETWEEN :startRow AND :endRow",
-            countQuery = "SELECT COUNT(DISTINCT g.id) FROM game_user g JOIN player_character pc ON g.id = pc.game_user_id",
-            nativeQuery = true)
-    List<Object[]> getGameUsersOrderedByAverageLevelOfPlayerCharacters(@Param("startRow") int startRow, @Param("endRow") int endRow);
-
-
+    
 
 }
