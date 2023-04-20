@@ -116,7 +116,9 @@ public class GameUserService {
     //todo variants
 
     public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
-        Page<Object[]> results = gameUserRepository.getGameUsersOrderedByAverageLevelOfPlayerCharacters(pageable);
+        int startRow = (int) pageable.getOffset() + 1;
+        int endRow = startRow + pageable.getPageSize() - 1;
+        List<Object[]> results = gameUserRepository.getGameUsersOrderedByAverageLevelOfPlayerCharacters(startRow, endRow);
 
         List<GameUserAveragePlayerCharacterLevelDto> sortedGameUserDtos = results.stream()
                 .map(result -> {
@@ -135,11 +137,35 @@ public class GameUserService {
                 })
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(sortedGameUserDtos, pageable, results.getTotalElements());
+        long totalElements = gameUserRepository.count();
+        return new PageImpl<>(sortedGameUserDtos, pageable, totalElements);
     }
 
+    //old2 better one
+//    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+//        Page<Object[]> results = gameUserRepository.getGameUsersOrderedByAverageLevelOfPlayerCharacters(pageable);
+//
+//        List<GameUserAveragePlayerCharacterLevelDto> sortedGameUserDtos = results.stream()
+//                .map(result -> {
+//                    GameUser gameUser = new GameUser();
+//                    gameUser.setId((Long) result[0]);
+//                    gameUser.setActiveStatus((Boolean) result[1]);
+//                    gameUser.setEmailAddress((String) result[2]);
+//                    gameUser.setFirstName((String) result[3]);
+//                    gameUser.setLastName((String) result[4]);
+//                    gameUser.setPassword((String) result[5]);
+//                    gameUser.setUsername((String) result[6]);
+//
+//                    Long averageLevel = ((Number) result[7]).longValue();
+//
+//                    return GameUserAveragePlayerCharacterLevelDto.from(gameUser, averageLevel);
+//                })
+//                .collect(Collectors.toList());
+//
+//        return new PageImpl<>(sortedGameUserDtos, pageable, results.getTotalElements());
+//    }
 
-    //old good one
+    //old1 good one
 //    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
 //        List<GameUser> allGameUsers = gameUserRepository.findAll();
 //
