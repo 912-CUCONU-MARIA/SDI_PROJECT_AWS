@@ -113,26 +113,53 @@ public class GameUserService {
 //
 //        return new PageImpl<>(gameUserAveragePlayerCharacterLevelDtoList, pageable, gameUserPage.getTotalElements());
 //    }
-    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
-        List<GameUser> allGameUsers = gameUserRepository.findAll();
+    //todo variants
 
-        List<GameUserAveragePlayerCharacterLevelDto> sortedGameUserDtos = allGameUsers.stream()
-                .sorted(Comparator.comparing(gameUser -> gameUser.getPlayerCharacterSet().stream()
-                        .mapToLong(PlayerCharacter::getLevel)
-                        .average()
-                        .orElse(0)))
-                .map(gameUser -> GameUserAveragePlayerCharacterLevelDto.from(gameUser, (long) gameUser.getPlayerCharacterSet().stream()
-                        .mapToLong(PlayerCharacter::getLevel)
-                        .average()
-                        .orElse(0)))
+    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+        Page<Object[]> results = gameUserRepository.getGameUsersOrderedByAverageLevelOfPlayerCharacters(pageable);
+
+        List<GameUserAveragePlayerCharacterLevelDto> sortedGameUserDtos = results.stream()
+                .map(result -> {
+                    GameUser gameUser = new GameUser();
+                    gameUser.setId((Long) result[0]);
+                    gameUser.setActiveStatus((Boolean) result[1]);
+                    gameUser.setEmailAddress((String) result[2]);
+                    gameUser.setFirstName((String) result[3]);
+                    gameUser.setLastName((String) result[4]);
+                    gameUser.setPassword((String) result[5]);
+                    gameUser.setUsername((String) result[6]);
+
+                    Long averageLevel = ((Number) result[7]).longValue();
+
+                    return GameUserAveragePlayerCharacterLevelDto.from(gameUser, averageLevel);
+                })
                 .collect(Collectors.toList());
 
-        int start = (int) pageable.getOffset();
-        int end = Math.min(start + pageable.getPageSize(), sortedGameUserDtos.size());
-        List<GameUserAveragePlayerCharacterLevelDto> pagedGameUserDtos = sortedGameUserDtos.subList(start, end);
-
-        return new PageImpl<>(pagedGameUserDtos, pageable, sortedGameUserDtos.size());
+        return new PageImpl<>(sortedGameUserDtos, pageable, results.getTotalElements());
     }
+
+
+    //old good one
+//    public Page<GameUserAveragePlayerCharacterLevelDto> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+//        List<GameUser> allGameUsers = gameUserRepository.findAll();
+//
+//        List<GameUserAveragePlayerCharacterLevelDto> sortedGameUserDtos = allGameUsers.stream()
+//                .sorted(Comparator.comparing(gameUser -> gameUser.getPlayerCharacterSet().stream()
+//                        .mapToLong(PlayerCharacter::getLevel)
+//                        .average()
+//                        .orElse(0)))
+//                .map(gameUser -> GameUserAveragePlayerCharacterLevelDto.from(gameUser, (long) gameUser.getPlayerCharacterSet().stream()
+//                        .mapToLong(PlayerCharacter::getLevel)
+//                        .average()
+//                        .orElse(0)))
+//                .collect(Collectors.toList());
+//
+//        int start = (int) pageable.getOffset();
+//        int end = Math.min(start + pageable.getPageSize(), sortedGameUserDtos.size());
+//        List<GameUserAveragePlayerCharacterLevelDto> pagedGameUserDtos = sortedGameUserDtos.subList(start, end);
+//
+//        return new PageImpl<>(pagedGameUserDtos, pageable, sortedGameUserDtos.size());
+//    }
 
 
 
