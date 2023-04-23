@@ -21,6 +21,7 @@ public class GameUserDto {
 
     //private Set<Long> playerCharacterSetIdsDto;
     ////private Set<PlayerCharacterDto> playerCharacterDtos;
+    private Long numberOfPlayerCharacters;
 
     //this one we use for /users
     public static GameUserDto from(GameUser gameUser){
@@ -36,7 +37,7 @@ public class GameUserDto {
         //                                                        .map(PlayerCharacter::getId)
         //                                                        .collect(Collectors.toSet()));
         ////gameUserDto.setPlayerCharacterDtos(gameUser.getPlayerCharacterSet().stream().map(PlayerCharacterDto::from).collect(Collectors.toSet()));
-
+        gameUserDto.setNumberOfPlayerCharacters((long) gameUser.getPlayerCharacterSet().size());
 
         return gameUserDto;
     }

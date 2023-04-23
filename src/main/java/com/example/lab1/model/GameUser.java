@@ -27,6 +27,7 @@ public class GameUser {
 
     private String password;
 
+
     @OneToMany(mappedBy="gameUser" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<PlayerCharacter> playerCharacterSet;
