@@ -124,14 +124,10 @@ public class GameUserService {
                 .map(result -> {
                     GameUser gameUser = new GameUser();
                     gameUser.setId((Long) result[0]);
-                    gameUser.setActiveStatus((Boolean) result[1]);
-                    gameUser.setEmailAddress((String) result[2]);
-                    gameUser.setFirstName((String) result[3]);
-                    gameUser.setLastName((String) result[4]);
-                    gameUser.setPassword((String) result[5]);
-                    gameUser.setUsername((String) result[6]);
+                    gameUser.setFirstName((String) result[1]);
+                    gameUser.setLastName((String) result[2]);
 
-                    Long averageLevel = ((Number) result[7]).longValue();
+                    Long averageLevel = ((Number) result[3]).longValue();
 
                     return GameUserAveragePlayerCharacterLevelDto.from(gameUser, averageLevel);
                 })
