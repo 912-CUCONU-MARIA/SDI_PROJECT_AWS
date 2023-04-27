@@ -28,7 +28,8 @@ public class ItemController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ){
-        return ResponseEntity.ok(itemService.getItemsDto(PageRequest.of(page, size)));
+        Pageable pageable=PageRequest.of(page, size);
+        return ResponseEntity.ok(itemService.getItemsDto(pageable));
     }
 
     @GetMapping("/{id}")
