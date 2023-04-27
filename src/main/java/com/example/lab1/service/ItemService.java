@@ -38,10 +38,13 @@ public class ItemService {
         Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
         List<ItemDto> itemDtos = results.getContent().stream()
                 .map(record -> {
-                    Item item = (Item) record[0];
-                    Long count = (Long) record[1];
-                    ItemDto itemDto = ItemDto.from(item);
-                    itemDto.setNumberOfPlayerCharactersOwning(count);
+                    ItemDto itemDto = new ItemDto();
+                    itemDto.setId((Long) record[0]);
+                    itemDto.setItemName((String) record[1]);
+                    itemDto.setItemRarity((String) record[2]);
+                    itemDto.setItemType((String) record[3]);
+                    itemDto.setItemLevel((Long) record[4]);
+                    itemDto.setNumberOfPlayerCharactersOwning((Long) record[5]);
                     return itemDto;
                 })
                 .collect(Collectors.toList());
