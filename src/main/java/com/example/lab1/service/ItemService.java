@@ -29,10 +29,25 @@ public class ItemService {
     }
 
 
-    public Page<ItemDto> getItemsDto(Pageable pageable){
-        return itemRepository.findAll(pageable)
-                .map(ItemDto::from);
+//    public Page<ItemDto> getItemsDto(Pageable pageable){
+//        return itemRepository.findAll(pageable)
+//                .map(ItemDto::from);
+//    }
+
+    public Page<ItemDto> getItemsDto(Pageable pageable) {
+        Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
+        List<ItemDto> itemDtos = results.getContent().stream()
+                .map(record -> {
+                    Item item = (Item) record[0];
+                    Long count = (Long) record[1];
+                    ItemDto itemDto = ItemDto.from(item);
+                    itemDto.setNumberOfPlayerCharactersOwning(count);
+                    return itemDto;
+                })
+                .collect(Collectors.toList());
+        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
     }
+
 
     public List<ItemDto> getItemsDto(){
         return itemRepository.findAll().stream().map(ItemDto::from).collect(Collectors.toList());
