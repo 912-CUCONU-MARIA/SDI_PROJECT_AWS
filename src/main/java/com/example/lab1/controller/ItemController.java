@@ -1,9 +1,13 @@
 package com.example.lab1.controller;
 
 import com.example.lab1.exception.MyException;
+import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
 import com.example.lab1.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/items")
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemService itemService;
@@ -20,8 +24,11 @@ public class ItemController {
     public ItemController(ItemService itemService) {this.itemService=itemService;}
 
     @GetMapping()
-    public ResponseEntity<List<ItemDto>> getAllItems(){
-        return ResponseEntity.ok(itemService.getItemsDto());
+    public ResponseEntity<Page<ItemDto>> getAllItems(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ){
+        return ResponseEntity.ok(itemService.getItemsDto(PageRequest.of(page, size)));
     }
 
     @GetMapping("/{id}")
