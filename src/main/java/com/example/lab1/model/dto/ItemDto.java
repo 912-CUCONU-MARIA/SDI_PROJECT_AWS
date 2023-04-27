@@ -19,6 +19,8 @@ public class ItemDto {
 
     private String description;
 
+    private Long numberOfPlayerCharactersOwning;
+
     public static ItemDto from(Item item){
 
         ItemDto itemDto=new ItemDto();
@@ -29,6 +31,7 @@ public class ItemDto {
         itemDto.setItemEffect(item.getItemEffect());
         itemDto.setItemLevel(item.getItemLevel());
         itemDto.setDescription(item.getDescription());
+        itemDto.setNumberOfPlayerCharactersOwning((long) item.getPlayerCharacterItemSet().size());
 
         return itemDto;
     }

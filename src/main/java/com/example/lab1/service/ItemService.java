@@ -8,6 +8,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +27,10 @@ public class ItemService {
         return ItemDto.from(itemRepository.save(Item.from(itemDto)));
     }
 
-    public List<ItemDto> getItemsDto(){
-        return itemRepository.findAll().stream().map(ItemDto::from).collect(Collectors.toList());
+
+    public Page<ItemDto> getItemsDto(Pageable pageable){
+        return itemRepository.findAll(pageable)
+                .map(ItemDto::from);
     }
 
     public ItemDto getItemDtoByID(Long id) throws MyException{
