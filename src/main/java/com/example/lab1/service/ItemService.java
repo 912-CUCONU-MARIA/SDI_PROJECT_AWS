@@ -4,6 +4,7 @@ import com.example.lab1.exception.MyException;
 import com.example.lab1.model.Item;
 import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
+import com.example.lab1.model.dto.ItemNoPlayerCharacters;
 import com.example.lab1.repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,11 @@ public class ItemService {
 //                .map(ItemDto::from);
 //    }
 
-    public Page<ItemDto> getItemsDto(Pageable pageable) {
+    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable) {
         Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
-        List<ItemDto> itemDtos = results.getContent().stream()
+        List<ItemNoPlayerCharacters> itemDtos = results.getContent().stream()
                 .map(record -> {
-                    ItemDto itemDto = new ItemDto();
+                    ItemNoPlayerCharacters itemDto = new ItemNoPlayerCharacters();
                     itemDto.setId((Long) record[0]);
                     itemDto.setItemName((String) record[1]);
                     itemDto.setItemRarity((String) record[2]);

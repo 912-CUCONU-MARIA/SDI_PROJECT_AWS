@@ -3,6 +3,7 @@ package com.example.lab1.controller;
 import com.example.lab1.exception.MyException;
 import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
+import com.example.lab1.model.dto.ItemNoPlayerCharacters;
 import com.example.lab1.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class ItemController {
     public ItemController(ItemService itemService) {this.itemService=itemService;}
 
     @GetMapping()
-    public ResponseEntity<Page<ItemDto>> getAllItems(
+    public ResponseEntity<Page<ItemNoPlayerCharacters>> getAllItems(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ){
