@@ -2,6 +2,7 @@ package com.example.lab1.service;
 
 import com.example.lab1.exception.MyException;
 import com.example.lab1.model.Item;
+import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
 import com.example.lab1.repository.ItemRepository;
 import jakarta.transaction.Transactional;
@@ -31,6 +32,10 @@ public class ItemService {
     public Page<ItemDto> getItemsDto(Pageable pageable){
         return itemRepository.findAll(pageable)
                 .map(ItemDto::from);
+    }
+
+    public List<ItemDto> getItemsDto(){
+        return itemRepository.findAll().stream().map(ItemDto::from).collect(Collectors.toList());
     }
 
     public ItemDto getItemDtoByID(Long id) throws MyException{
