@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ItemRepository extends JpaRepository<Item,Long> {
 
-    @Query(value="SELECT i.id, i.itemName, i.itemRarity, i.itemType, i.itemLevel, COUNT(pci) " +
+    @Query(value="SELECT i.id, i.item_name, i.item_rarity, i.item_type, i.item_level, COUNT(pci) " +
             "FROM Item i " +
             "LEFT JOIN player_character_item pci ON i.id=pci.item_id " +
             "GROUP BY i.id",
