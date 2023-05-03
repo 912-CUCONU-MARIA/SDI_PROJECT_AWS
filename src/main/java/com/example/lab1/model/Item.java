@@ -4,6 +4,7 @@ import com.example.lab1.model.dto.ItemDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -147,7 +148,8 @@ public class Item {
         item.setItemEffect(itemDto.getItemEffect());
         item.setItemLevel(itemDto.getItemLevel());
         item.setDescription(itemDto.getDescription());
-
+        item.setNumberOfCopies(0L);
+        item.setPlayerCharacterItemSet(new HashSet<>());
         return item;
     }
 

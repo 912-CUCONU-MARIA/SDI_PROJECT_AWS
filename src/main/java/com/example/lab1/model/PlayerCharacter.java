@@ -8,6 +8,7 @@ import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -138,6 +139,8 @@ public class PlayerCharacter {
         playerCharacter.setLevel(playerCharacterDto.getLevel());
         playerCharacter.setExperience(playerCharacterDto.getExperience());
         playerCharacter.setClassId(playerCharacterDto.getClassId());
+        playerCharacter.setNumberOfItemsOwned(0L);
+        playerCharacter.setPlayerCharacterItemSet(new HashSet<>());
 
         return playerCharacter;
 

@@ -19,7 +19,7 @@ public class ItemDto {
 
     private String description;
 
-    private Long numberOfPlayerCharactersOwning;
+    private Long numberOfCopies;
 
     public static ItemDto from(Item item){
 
@@ -31,7 +31,7 @@ public class ItemDto {
         itemDto.setItemEffect(item.getItemEffect());
         itemDto.setItemLevel(item.getItemLevel());
         itemDto.setDescription(item.getDescription());
-        itemDto.setNumberOfPlayerCharactersOwning((long) item.getPlayerCharacterItemSet().size());
+        itemDto.setNumberOfCopies((long) item.getPlayerCharacterItemSet().size());
 
         return itemDto;
     }

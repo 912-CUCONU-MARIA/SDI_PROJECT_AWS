@@ -19,6 +19,8 @@ public class PlayerCharacterDto {
     //private GameUserDto gameUserDto;
     private Long gameUserId;
 
+    private Long numberOfItemsOwned;
+
     //this on we use for /playercharacters
     public static PlayerCharacterDto from(PlayerCharacter pc){
 
@@ -30,6 +32,7 @@ public class PlayerCharacterDto {
         playerCharacterDto.setClassId(pc.getClassId());
         //playerCharacterDto.setGameUserDto(GameUserDto.from(pc.getGameUser()));
         playerCharacterDto.setGameUserId(pc.getGameUser().getId());
+        playerCharacterDto.setNumberOfItemsOwned(pc.getNumberOfItemsOwned());
 
         return playerCharacterDto;
 

@@ -6,6 +6,7 @@ import com.example.lab1.model.dto.PlayerCharacterDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -127,7 +128,7 @@ public class GameUser {
         gameUser.setActiveStatus(gameUserDto.getActiveStatus());
         gameUser.setUsername(gameUserDto.getUsername());
         gameUser.setPassword(gameUserDto.getPassword());
-
+        gameUser.setPlayerCharacterSet(new HashSet<>());
         return gameUser;
     }
 
