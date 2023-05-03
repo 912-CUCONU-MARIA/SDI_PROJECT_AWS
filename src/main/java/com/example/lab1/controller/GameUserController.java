@@ -74,8 +74,8 @@ public class GameUserController {
 
     //get gameusers with all playercharacter info
     @GetMapping("/{id}")
-    public ResponseEntity<GameUserDtoWPlayerChObject> getGameUserById(@PathVariable(value = "id") Long id) throws MyException {
-        GameUserDtoWPlayerChObject gameUserDtoResponse=gameUserService.getGameUserDtoWPlayerChObjectByID(id);
+    public ResponseEntity<GameUserDto> getGameUserById(@PathVariable(value = "id") Long id) throws MyException {
+        GameUserDto gameUserDtoResponse=gameUserService.getGameUserDtoByID(id);
         return ResponseEntity.ok(gameUserDtoResponse);
     }
 
