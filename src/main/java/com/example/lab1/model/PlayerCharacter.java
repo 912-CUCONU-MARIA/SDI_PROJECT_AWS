@@ -40,6 +40,7 @@ public class PlayerCharacter {
     @JsonManagedReference
     private Set<PlayerCharacterItem> playerCharacterItemSet;
 
+    private Long numberOfItemsOwned;
 
     public PlayerCharacter() {
     }
@@ -108,6 +109,14 @@ public class PlayerCharacter {
         this.playerCharacterItemSet = playerCharacterItemSet;
     }
 
+    public Long getNumberOfItemsOwned() {
+        return numberOfItemsOwned;
+    }
+
+    public void setNumberOfItemsOwned(Long numberOfItemsOwned) {
+        this.numberOfItemsOwned = numberOfItemsOwned;
+    }
+
     @Override
     public String toString() {
         return "PlayerCharacter{" +
@@ -117,6 +126,7 @@ public class PlayerCharacter {
                 ", experience=" + experience +
                 ", classId=" + classId +
                 ", gameUser=" + gameUser +
+                ", numberOfItemsOwned=" + numberOfItemsOwned +
                 '}';
     }
 

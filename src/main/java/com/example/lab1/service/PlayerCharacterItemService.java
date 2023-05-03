@@ -34,6 +34,7 @@ public class PlayerCharacterItemService {
         this.itemRepository = itemRepository;
     }
 
+    @Transactional
     public PlayerCharacterItemDto addItemToPlayerCharacter(PlayerCharacterItemDto playerCharacterItemDto,Long idPlayerCharacter, Long idItem){
 
         PlayerCharacter playerCharacter=playerCharacterRepository.findById(idPlayerCharacter).orElseThrow();
@@ -46,7 +47,10 @@ public class PlayerCharacterItemService {
 
         PlayerCharacterItem addedPlayerCharacterItem=playerCharacterItemRepository.save(playerCharacterItem);
         playerCharacter.getPlayerCharacterItemSet().add(addedPlayerCharacterItem);
+        playerCharacter.setNumberOfItemsOwned(playerCharacter.getNumberOfItemsOwned()+1);
+
         item.getPlayerCharacterItemSet().add(addedPlayerCharacterItem);
+        item.setNumberOfCopies(item.getNumberOfCopies()+1);//
 
         return PlayerCharacterItemDto.from(addedPlayerCharacterItem);
 
@@ -101,10 +105,13 @@ GET /players/1/items //show player1 and his items ->RETURN A NEW DTO COMPOSED OF
 
     }
 
+    @Transactional
     public void deleteItemOfPlayerCharacter(Long playerChId,Long pciId) throws MyException {
         PlayerCharacterItem playerCharacterItemToDelete=playerCharacterItemRepository.findById(pciId).orElseThrow(() -> new MyException("Invalid playercharacteritem id "+pciId.toString()));
-        if(Objects.equals(playerChId, playerCharacterItemToDelete.getPlayerCharacter().getId()))
+        if(Objects.equals(playerChId, playerCharacterItemToDelete.getPlayerCharacter().getId())) {
             playerCharacterItemRepository.delete(playerCharacterItemToDelete);
+            //the count deletion is handled in the db
+        }
     }
 
 }

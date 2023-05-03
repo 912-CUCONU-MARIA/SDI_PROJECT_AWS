@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping()
+@RequestMapping("/api")
 public class PlayerCharacterItemController {
 
 /*

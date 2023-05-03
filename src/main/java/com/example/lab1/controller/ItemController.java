@@ -59,4 +59,9 @@ public class ItemController {
     @DeleteMapping()
     void deleteAllItems(){itemService.deleteItems();}
 
+    @PutMapping()
+    void addCount(){
+        itemService.setCount();
+    }
+
 }

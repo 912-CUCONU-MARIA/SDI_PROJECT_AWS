@@ -36,6 +36,8 @@ public class Item {
     @JsonManagedReference
     private Set<PlayerCharacterItem> playerCharacterItemSet;
 
+    private Long numberOfCopies;
+
 
     public Item() {
     }
@@ -113,6 +115,14 @@ public class Item {
         this.description = description;
     }
 
+    public Long getNumberOfCopies() {
+        return numberOfCopies;
+    }
+
+    public void setNumberOfCopies(Long numberOfPlayerCharactersOwning) {
+        this.numberOfCopies = numberOfPlayerCharactersOwning;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -124,6 +134,7 @@ public class Item {
                 ", itemLevel=" + itemLevel +
                 ", description='" + description + '\'' +
                 ", playerCharacterItemSet=" + playerCharacterItemSet +
+                ", numberOfCopies=" + numberOfCopies +
                 '}';
     }
 

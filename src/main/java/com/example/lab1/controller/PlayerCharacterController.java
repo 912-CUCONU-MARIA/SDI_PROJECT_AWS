@@ -2,13 +2,13 @@ package com.example.lab1.controller;
 
 import com.example.lab1.exception.MyException;
 import com.example.lab1.model.PlayerCharacter;
-import com.example.lab1.model.dto.PlayerCharacterAndNumberOfOtherPlayerCharactersDto;
-import com.example.lab1.model.dto.PlayerCharacterDto;
-import com.example.lab1.model.dto.PlayerCharacterDtoWUserObject;
+import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.PlayerCharacterRepository;
 import com.example.lab1.service.PlayerCharacterService;
 //import com.speedment.jpastreamer.application.JPAStreamer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 //@RequestMapping("/playercharacters")
+@RequestMapping("/api")
 public class PlayerCharacterController {
 
     private final PlayerCharacterService playerCharacterService;
@@ -33,13 +34,21 @@ public class PlayerCharacterController {
     }
 
     @GetMapping("/playercharacters")
-    //with user_id only
-    //@GetMapping()
-    public ResponseEntity<List<PlayerCharacterDto>> getAllPlayerCharacters(){
-        //List<PlayerCharacter> playerCharacters=playerCharacterService.getPlayerCharacters();
-        //List<PlayerCharacterDto> playerCharacterDtos=playerCharacters.stream().map(PlayerCharacterDto::from).collect(Collectors.toList());
-        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersDto());
+    public ResponseEntity<Page<PlayerCharacterNoItems>> getAllPlayerCharacters(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ){
+        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersDto(PageRequest.of(page, size)));
     }
+
+//    @GetMapping("/playercharacters")
+//    //with user_id only
+//    //@GetMapping()
+//    public ResponseEntity<List<PlayerCharacterDto>> getAllPlayerCharacters(){
+//        //List<PlayerCharacter> playerCharacters=playerCharacterService.getPlayerCharacters();
+//        //List<PlayerCharacterDto> playerCharacterDtos=playerCharacters.stream().map(PlayerCharacterDto::from).collect(Collectors.toList());
+//        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersDto());
+//    }
 
     //with user object
     @GetMapping("/playercharacters/{id}")
@@ -94,4 +103,10 @@ public class PlayerCharacterController {
 //        });
 //        return errors;
 //    }
+
+    @PutMapping("/playercharacters")
+    void addCount(){
+        playerCharacterService.setCount();
+    }
+
 }

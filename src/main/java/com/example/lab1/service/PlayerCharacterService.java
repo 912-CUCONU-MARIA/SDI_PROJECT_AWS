@@ -4,13 +4,13 @@ import com.example.lab1.exception.MyException;
 import com.example.lab1.model.GameUser;
 import com.example.lab1.model.PlayerCharacter;
 import com.example.lab1.model.PlayerCharacterItem;
-import com.example.lab1.model.dto.PlayerCharacterAndNumberOfOtherPlayerCharactersDto;
-import com.example.lab1.model.dto.PlayerCharacterDto;
-import com.example.lab1.model.dto.PlayerCharacterDtoWUserObject;
+import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.GameUserRepository;
 import com.example.lab1.repository.PlayerCharacterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -41,6 +41,11 @@ public class PlayerCharacterService {
         gameUser.getPlayerCharacterSet().add(addedPlayerCharacter);
         //System.out.println(gameUser);
         return PlayerCharacterDto.from(addedPlayerCharacter);
+    }
+
+    public Page<PlayerCharacterNoItems> getPlayerCharactersDto(Pageable pageable){
+        return playerCharacterRepository.findAll(pageable)
+                .map(PlayerCharacterNoItems::from);
     }
 
     public List<PlayerCharacterDto> getPlayerCharactersDto(){
@@ -126,7 +131,12 @@ public class PlayerCharacterService {
 
     }
 
-
+    public void setCount(){
+        playerCharacterRepository.findAll().forEach(playerCharacter -> {
+            playerCharacter.setNumberOfItemsOwned((long) playerCharacter.getPlayerCharacterItemSet().size());
+            playerCharacterRepository.save(playerCharacter);
+        });
+    }
 
 
 }

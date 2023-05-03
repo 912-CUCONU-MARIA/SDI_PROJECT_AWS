@@ -30,27 +30,27 @@ public class ItemService {
     }
 
 
-//    public Page<ItemDto> getItemsDto(Pageable pageable){
-//        return itemRepository.findAll(pageable)
-//                .map(ItemDto::from);
-//    }
-
-    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable) {
-        Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
-        List<ItemNoPlayerCharacters> itemDtos = results.getContent().stream()
-                .map(record -> {
-                    ItemNoPlayerCharacters itemDto = new ItemNoPlayerCharacters();
-                    itemDto.setId((Long) record[0]);
-                    itemDto.setItemName((String) record[1]);
-                    itemDto.setItemRarity((String) record[2]);
-                    itemDto.setItemType((String) record[3]);
-                    itemDto.setItemLevel((Long) record[4]);
-                    itemDto.setNumberOfPlayerCharactersOwning((Long) record[5]);
-                    return itemDto;
-                })
-                .collect(Collectors.toList());
-        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
+        return itemRepository.findAll(pageable)
+                .map(ItemNoPlayerCharacters::from);
     }
+
+//    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable) {
+//        Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
+//        List<ItemNoPlayerCharacters> itemDtos = results.getContent().stream()
+//                .map(record -> {
+//                    ItemNoPlayerCharacters itemDto = new ItemNoPlayerCharacters();
+//                    itemDto.setId((Long) record[0]);
+//                    itemDto.setItemName((String) record[1]);
+//                    itemDto.setItemRarity((String) record[2]);
+//                    itemDto.setItemType((String) record[3]);
+//                    itemDto.setItemLevel((Long) record[4]);
+//                    itemDto.setNumberOfPlayerCharactersOwning((Long) record[5]);
+//                    return itemDto;
+//                })
+//                .collect(Collectors.toList());
+//        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+//    }
 
 
     public List<ItemDto> getItemsDto(){
@@ -82,6 +82,12 @@ public class ItemService {
         return ItemDto.from(itemToUpdate);
     }
 
+    public void setCount(){
+        itemRepository.findAll().forEach(item -> {
+            item.setNumberOfCopies((long) item.getPlayerCharacterItemSet().size());
+            itemRepository.save(item);
+        });
+    }
 
 
 

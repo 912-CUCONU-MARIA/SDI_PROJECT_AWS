@@ -16,19 +16,17 @@ public class ItemNoPlayerCharacters {
 
     private Long itemLevel;
 
-    private Long numberOfPlayerCharactersOwning;
+    private Long numberOfCopies;
 
-    public static ItemDto from(Item item){
+    public static ItemNoPlayerCharacters from(Item item){
 
-        ItemDto itemDto=new ItemDto();
+        ItemNoPlayerCharacters itemDto=new ItemNoPlayerCharacters();
         itemDto.setId(item.getId());
         itemDto.setItemName(item.getItemName());
         itemDto.setItemRarity(item.getItemRarity());
         itemDto.setItemType(item.getItemType());
-        itemDto.setItemEffect(item.getItemEffect());
         itemDto.setItemLevel(item.getItemLevel());
-        itemDto.setDescription(item.getDescription());
-        itemDto.setNumberOfPlayerCharactersOwning((long) item.getPlayerCharacterItemSet().size());
+        itemDto.setNumberOfCopies(item.getNumberOfCopies());
 
         return itemDto;
     }
