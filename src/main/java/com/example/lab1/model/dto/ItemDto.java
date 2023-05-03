@@ -31,7 +31,7 @@ public class ItemDto {
         itemDto.setItemEffect(item.getItemEffect());
         itemDto.setItemLevel(item.getItemLevel());
         itemDto.setDescription(item.getDescription());
-        itemDto.setNumberOfCopies((long) item.getPlayerCharacterItemSet().size());
+        itemDto.setNumberOfCopies((long) item.getNumberOfCopies());
 
         return itemDto;
     }
