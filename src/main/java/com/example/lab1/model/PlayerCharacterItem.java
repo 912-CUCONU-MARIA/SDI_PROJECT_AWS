@@ -10,8 +10,9 @@ import org.hibernate.annotations.OnDeleteAction;
 public class PlayerCharacterItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     //char_id
     //item_id

@@ -16,8 +16,9 @@ import java.util.Set;
 public class PlayerCharacter {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     @NotBlank(message = "Name should not be blank")
     private String pc_name;

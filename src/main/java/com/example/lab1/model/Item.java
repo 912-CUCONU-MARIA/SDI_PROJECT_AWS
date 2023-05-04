@@ -12,8 +12,9 @@ import java.util.stream.Collectors;
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     private String itemName;
 
