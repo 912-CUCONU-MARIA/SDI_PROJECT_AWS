@@ -52,8 +52,8 @@ public class PlayerCharacterController {
 
     //with user object
     @GetMapping("/playercharacters/{id}")
-    public ResponseEntity<PlayerCharacterNoItems> getPlayerCharacterById(@PathVariable(value = "id") Long id) throws MyException {
-        PlayerCharacterNoItems playerCharacterDtoResponse=playerCharacterService.getPlayerCharacterDtoByID(id);
+    public ResponseEntity<PlayerCharacterNoItemsGameuserUsernameDto> getPlayerCharacterById(@PathVariable(value = "id") Long id) throws MyException {
+        PlayerCharacterNoItemsGameuserUsernameDto playerCharacterDtoResponse=playerCharacterService.getPlayerCharacterDtoByID(id);
         return ResponseEntity.ok(playerCharacterDtoResponse);
     }
 

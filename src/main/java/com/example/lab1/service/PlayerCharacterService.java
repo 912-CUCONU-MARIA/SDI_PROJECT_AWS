@@ -56,8 +56,8 @@ public class PlayerCharacterService {
         return playerCharacterRepository.findAll().stream().map(PlayerCharacterDtoWUserObject::from).collect(Collectors.toList());
     }
 
-    public PlayerCharacterNoItems getPlayerCharacterDtoByID(Long id) throws MyException {
-        return PlayerCharacterNoItems.from(playerCharacterRepository.findById(id).orElseThrow(() -> new MyException(id.toString())));
+    public PlayerCharacterNoItemsGameuserUsernameDto getPlayerCharacterDtoByID(Long id) throws MyException {
+        return PlayerCharacterNoItemsGameuserUsernameDto.from(playerCharacterRepository.findById(id).orElseThrow(() -> new MyException(id.toString())));
     }
 
     public PlayerCharacterDtoWUserObject getPlayerCharacterDtoWUserObjectByID(Long id) throws MyException {
