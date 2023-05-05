@@ -16,5 +16,11 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 //            nativeQuery = true)
 //    Page<Object[]> findAllWithPlayerCharacterItemCount(Pageable pageable);
 
-    //no effect or description
+    @Query(value = "SELECT i.id, i.item_name, i.item_level, i.number_of_copies " +
+            "FROM item i " +
+            "ORDER BY i.id",
+            countQuery = "SELECT COUNT(i.id) FROM item i",
+            nativeQuery = true)
+    Page<Object[]> getAllItems(Pageable pageable);
+
 }
