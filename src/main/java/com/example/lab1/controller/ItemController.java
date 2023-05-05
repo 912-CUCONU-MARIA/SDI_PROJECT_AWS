@@ -4,7 +4,6 @@ import com.example.lab1.exception.MyException;
 import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
 import com.example.lab1.model.dto.ItemNoPlayerCharacters;
-import com.example.lab1.model.dto.ItemNoPlayerCharactersSmol;
 import com.example.lab1.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,9 +25,8 @@ public class ItemController {
     @Autowired
     public ItemController(ItemService itemService) {this.itemService=itemService;}
 
-    //from ItemNoPlayerCharacters
     @GetMapping()
-    public ResponseEntity<Page<ItemNoPlayerCharactersSmol>> getAllItems(
+    public ResponseEntity<Page<ItemNoPlayerCharacters>> getAllItems(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "sort", defaultValue="id",required = false) String sort,

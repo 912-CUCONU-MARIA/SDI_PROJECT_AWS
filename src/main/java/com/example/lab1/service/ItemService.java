@@ -5,7 +5,6 @@ import com.example.lab1.model.Item;
 import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
 import com.example.lab1.model.dto.ItemNoPlayerCharacters;
-import com.example.lab1.model.dto.ItemNoPlayerCharactersSmol;
 import com.example.lab1.repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,29 +30,10 @@ public class ItemService {
     }
 
 
-//    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
-//        return itemRepository.findAll(pageable)
-//                .map(ItemNoPlayerCharacters::from);
-//    }
-
-    public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
-        Page<Object[]> results = itemRepository.getAllItems(pageable);
-
-        List<ItemNoPlayerCharactersSmol> itemDtos = results.stream()
-                .map(result -> {
-                    Item item = new Item();
-                    item.setId(((Number) result[0]).longValue());
-                    item.setItemName((String) result[1]);
-                    item.setItemLevel(((Number) result[2]).longValue());
-                    item.setNumberOfCopies(((Number) result[3]).longValue());
-
-                    return ItemNoPlayerCharactersSmol.from(item);
-                })
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
+        return itemRepository.findAll(pageable)
+                .map(ItemNoPlayerCharacters::from);
     }
-
 
 //    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable) {
 //        Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
