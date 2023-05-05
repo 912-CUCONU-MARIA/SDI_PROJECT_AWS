@@ -57,8 +57,8 @@ public class GameUserController {
     public ResponseEntity<Page<GameUserDto>> getAllGameUsers(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
-            @RequestParam(name = "sort", required = false) String sort,
-            @RequestParam(name = "direction", required = false) String direction) {
+            @RequestParam(name = "sort", defaultValue="id",required = false) String sort,
+            @RequestParam(name = "direction",defaultValue ="asc",required = false) String direction) {
 
         Pageable pageable;
         if (sort != null && direction != null) {
