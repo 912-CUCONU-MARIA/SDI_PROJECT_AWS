@@ -9,6 +9,8 @@ import com.example.lab1.service.PlayerCharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -36,9 +38,17 @@ public class PlayerCharacterController {
     @GetMapping("/playercharacters")
     public ResponseEntity<Page<PlayerCharacterNoItems>> getAllPlayerCharacters(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size
-    ){
-        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersDto(PageRequest.of(page, size)));
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sort", required = false) String sort,
+            @RequestParam(name = "direction", required = false) String direction) {
+
+        Pageable pageable;
+        if (sort != null && direction != null) {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString(direction), sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersDto(pageable));
     }
 
 //    @GetMapping("/playercharacters")
