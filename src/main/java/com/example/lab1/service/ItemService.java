@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,20 +36,38 @@ public class ItemService {
 //                .map(ItemNoPlayerCharacters::from);
 //    }
 
-    public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
-        Page<Object[]> results = itemRepository.getAllItems(pageable);
+//    public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
+//        Page<Object[]> results = itemRepository.getAllItems(pageable);
+//
+//        List<ItemNoPlayerCharactersSmol> itemDtos = results.stream()
+//                .map(result -> ItemNoPlayerCharactersSmol.builder()
+//                        .id(((Number) result[0]).longValue())
+//                        .itemName((String) result[1])
+//                        .itemLevel(((Number) result[2]).longValue())
+//                        .numberOfCopies(((Number) result[3]).longValue())
+//                        .build())
+//                .collect(Collectors.toList());
+//
+//        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+//    }
+public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
+    Page<Object[]> results = itemRepository.getAllItems(pageable);
 
-        List<ItemNoPlayerCharactersSmol> itemDtos = results.stream()
-                .map(result -> ItemNoPlayerCharactersSmol.builder()
-                        .id(((Number) result[0]).longValue())
-                        .itemName((String) result[1])
-                        .itemLevel(((Number) result[2]).longValue())
-                        .numberOfCopies(((Number) result[3]).longValue())
-                        .build())
-                .collect(Collectors.toList());
+    List<ItemNoPlayerCharactersSmol> itemDtos = new ArrayList<>();
 
-        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+    for (Object[] result : results) {
+        ItemNoPlayerCharactersSmol itemDto = ItemNoPlayerCharactersSmol.builder()
+                .id(((Number) result[0]).longValue())
+                .itemName((String) result[1])
+                .itemLevel(((Number) result[2]).longValue())
+                .numberOfCopies(((Number) result[3]).longValue())
+                .build();
+        itemDtos.add(itemDto);
     }
+
+    return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+}
+
 
     public List<ItemDto> getItemsDto(){
         return itemRepository.findAll().stream().map(ItemDto::from).collect(Collectors.toList());

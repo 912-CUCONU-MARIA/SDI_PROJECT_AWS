@@ -22,4 +22,5 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
             countQuery = "SELECT COUNT(i.id) FROM item i",
             nativeQuery = true)
     Page<Object[]> getAllItems(Pageable pageable);
+
 }
