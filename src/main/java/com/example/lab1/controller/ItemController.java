@@ -27,7 +27,7 @@ public class ItemController {
     public ItemController(ItemService itemService) {this.itemService=itemService;}
 
     @GetMapping()
-    public ResponseEntity<Page<ItemNoPlayerCharactersSmol>> getAllItems(
+    public ResponseEntity<Page<ItemNoPlayerCharacters>> getAllItems(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "sort",required = false) String sort,

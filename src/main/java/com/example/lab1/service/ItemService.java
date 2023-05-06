@@ -31,10 +31,10 @@ public class ItemService {
         return ItemDto.from(itemRepository.save(Item.from(itemDto)));
     }
 
-//    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
-//        return itemRepository.findAll(pageable)
-//                .map(ItemNoPlayerCharacters::from);
-//    }
+    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
+        return itemRepository.findAll(pageable)
+                .map(ItemNoPlayerCharacters::from);
+    }
 
 //    public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
 //        Page<Object[]> results = itemRepository.getAllItems(pageable);
@@ -50,23 +50,23 @@ public class ItemService {
 //
 //        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
 //    }
-public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
-    Page<Object[]> results = itemRepository.getAllItems(pageable);
-
-    List<ItemNoPlayerCharactersSmol> itemDtos = new ArrayList<>();
-
-    for (Object[] result : results) {
-        ItemNoPlayerCharactersSmol itemDto = ItemNoPlayerCharactersSmol.builder()
-                .id(((Number) result[0]).longValue())
-                .itemName((String) result[1])
-                .itemLevel(((Number) result[2]).longValue())
-                .numberOfCopies(((Number) result[3]).longValue())
-                .build();
-        itemDtos.add(itemDto);
-    }
-
-    return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
-}
+//public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
+//    Page<Object[]> results = itemRepository.getAllItems(pageable);
+//
+//    List<ItemNoPlayerCharactersSmol> itemDtos = new ArrayList<>();
+//
+//    for (Object[] result : results) {
+//        ItemNoPlayerCharactersSmol itemDto = ItemNoPlayerCharactersSmol.builder()
+//                .id(((Number) result[0]).longValue())
+//                .itemName((String) result[1])
+//                .itemLevel(((Number) result[2]).longValue())
+//                .numberOfCopies(((Number) result[3]).longValue())
+//                .build();
+//        itemDtos.add(itemDto);
+//    }
+//
+//    return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+//}
 
 
     public List<ItemDto> getItemsDto(){
