@@ -5,6 +5,7 @@ import com.example.lab1.model.Item;
 import com.example.lab1.model.dto.GameUserDto;
 import com.example.lab1.model.dto.ItemDto;
 import com.example.lab1.model.dto.ItemNoPlayerCharacters;
+import com.example.lab1.model.dto.ItemNoPlayerCharactersSmol;
 import com.example.lab1.repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,29 +30,25 @@ public class ItemService {
         return ItemDto.from(itemRepository.save(Item.from(itemDto)));
     }
 
-
-    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
-        return itemRepository.findAll(pageable)
-                .map(ItemNoPlayerCharacters::from);
-    }
-
-//    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable) {
-//        Page<Object[]> results = itemRepository.findAllWithPlayerCharacterItemCount(pageable);
-//        List<ItemNoPlayerCharacters> itemDtos = results.getContent().stream()
-//                .map(record -> {
-//                    ItemNoPlayerCharacters itemDto = new ItemNoPlayerCharacters();
-//                    itemDto.setId((Long) record[0]);
-//                    itemDto.setItemName((String) record[1]);
-//                    itemDto.setItemRarity((String) record[2]);
-//                    itemDto.setItemType((String) record[3]);
-//                    itemDto.setItemLevel((Long) record[4]);
-//                    itemDto.setNumberOfPlayerCharactersOwning((Long) record[5]);
-//                    return itemDto;
-//                })
-//                .collect(Collectors.toList());
-//        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+//    public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
+//        return itemRepository.findAll(pageable)
+//                .map(ItemNoPlayerCharacters::from);
 //    }
 
+    public Page<ItemNoPlayerCharactersSmol> getItemsDto(Pageable pageable) {
+        Page<Object[]> results = itemRepository.getAllItems(pageable);
+
+        List<ItemNoPlayerCharactersSmol> itemDtos = results.stream()
+                .map(result -> ItemNoPlayerCharactersSmol.builder()
+                        .id(((Number) result[0]).longValue())
+                        .itemName((String) result[1])
+                        .itemLevel(((Number) result[2]).longValue())
+                        .numberOfCopies(((Number) result[3]).longValue())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(itemDtos, pageable, results.getTotalElements());
+    }
 
     public List<ItemDto> getItemsDto(){
         return itemRepository.findAll().stream().map(ItemDto::from).collect(Collectors.toList());
