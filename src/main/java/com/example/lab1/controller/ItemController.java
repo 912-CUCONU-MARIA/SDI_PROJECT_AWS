@@ -1,11 +1,9 @@
 package com.example.lab1.controller;
 
 import com.example.lab1.exception.MyException;
-import com.example.lab1.model.dto.GameUserDto;
-import com.example.lab1.model.dto.ItemDto;
-import com.example.lab1.model.dto.ItemNoPlayerCharacters;
-import com.example.lab1.model.dto.ItemNoPlayerCharactersSmol;
+import com.example.lab1.model.dto.*;
 import com.example.lab1.service.ItemService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,7 +47,7 @@ public class ItemController {
     }
 
     @PostMapping()
-    public ResponseEntity<ItemDto> createItem(@RequestBody final ItemDto itemDtoRequest) {
+    public ResponseEntity<ItemDto> createItem(@RequestBody @Valid final ItemDto itemDtoRequest) {
         ItemDto itemDtoResponse=itemService.addItem(itemDtoRequest);
         return ResponseEntity.ok(itemDtoResponse);
     }
@@ -72,6 +70,23 @@ public class ItemController {
     @PutMapping()
     void addCount(){
         itemService.setCount();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ItemNameEffectDto>> searchItems(@RequestParam String name) {
+        List<ItemNameEffectDto> items = itemService.searchItemsByName(name);
+        return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/averageplayercharacterlevel")
+    //sorted(Comparator.comparing(author->author.getNoBooks()))
+    //Show all Items ordered by the average level of the PlayerCharacters that own them
+    public ResponseEntity<Page<ItemAveragePlayerCharacterLevelDto>> getItemsOrderedByAverageLevelOfPlayerCharacters(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(itemService.getItemsOrderedByAverageLevelOfPlayerCharacters(pageable));
     }
 
 }

@@ -3,6 +3,10 @@ package com.example.lab1.model.dto;
 import com.example.lab1.model.PlayerCharacter;
 import lombok.Data;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Data
 public class PlayerCharacterNoItemsGameuserUsernameDto {
 
@@ -14,6 +18,7 @@ public class PlayerCharacterNoItemsGameuserUsernameDto {
     private Long classId;
     private String gameUserUsername;
     private Long numberOfItemsOwned;
+//    private List<String> itemsOwned;
 
     public static PlayerCharacterNoItemsGameuserUsernameDto from(PlayerCharacter pc){
 
@@ -25,6 +30,10 @@ public class PlayerCharacterNoItemsGameuserUsernameDto {
         playerCharacterDto.setClassId(pc.getClassId());
         playerCharacterDto.setGameUserUsername(pc.getGameUser().getUsername());
         playerCharacterDto.setNumberOfItemsOwned(pc.getNumberOfItemsOwned());
+//        playerCharacterDto.setItemsOwned(pc.getPlayerCharacterItemSet().stream()
+//                .map(i -> i.getItem().getItemName())
+//                .collect(Collectors.toList())
+//        );
 
         return playerCharacterDto;
 

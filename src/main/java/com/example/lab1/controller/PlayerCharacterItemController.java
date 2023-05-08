@@ -2,10 +2,16 @@ package com.example.lab1.controller;
 
 
 import com.example.lab1.exception.MyException;
+import com.example.lab1.model.dto.ItemDtoWPlayerChItemObject;
+import com.example.lab1.model.dto.ItemNoPlayerCharacters;
 import com.example.lab1.model.dto.PlayerCharacterDtoWItemObject;
 import com.example.lab1.model.dto.PlayerCharacterItemDto;
 import com.example.lab1.service.PlayerCharacterItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,18 +38,42 @@ POST /players/1/items/1 and in json specify additional attr: is_equipped and upg
             return ResponseEntity.ok(playerCharacterItemService.getPlayerCharacterItemDtos());
         }
 
+//        @GetMapping("/playercharacters/{playerChId}/items")
+//        public ResponseEntity<PlayerCharacterDtoWItemObject> getPlayerCharacterAllItems(@PathVariable(value="playerChId") Long playerChId)
+//        {
+//            PlayerCharacterDtoWItemObject playerCharacterDtoWItemObjectResponse=playerCharacterItemService.getPlayerCharacterAllItems(playerChId);
+//            return ResponseEntity.ok(playerCharacterDtoWItemObjectResponse);
+//        }
         @GetMapping("/playercharacters/{playerChId}/items")
-        public ResponseEntity<PlayerCharacterDtoWItemObject> getPlayerCharacterAllItems(@PathVariable(value="playerChId") Long playerChId)
-        {
-            PlayerCharacterDtoWItemObject playerCharacterDtoWItemObjectResponse=playerCharacterItemService.getPlayerCharacterAllItems(playerChId);
-            return ResponseEntity.ok(playerCharacterDtoWItemObjectResponse);
+        public ResponseEntity<Page<ItemDtoWPlayerChItemObject>> getPlayerCharacterAllItems(
+                @PathVariable(value="playerChId") Long playerChId,
+                @RequestParam(name = "page", defaultValue = "0") int page,
+                @RequestParam(name = "size", defaultValue = "10") int size,
+                @RequestParam(name = "sort",required = false) String sort,
+                @RequestParam(name = "direction",required = false) String direction) {
+
+            Pageable pageable;
+            if (sort != null && direction != null) {
+                pageable = PageRequest.of(page, size, Sort.Direction.fromString(direction), sort);
+            } else {
+                pageable = PageRequest.of(page, size);
+            }
+            return ResponseEntity.ok(playerCharacterItemService.getPlayerCharacterAllItems(playerChId,pageable));
         }
+
 
         @PostMapping("/playercharacters/{playerChId}/items/{itemId}")
         public ResponseEntity<PlayerCharacterItemDto> addItemToPlayerCharacter(@PathVariable(value = "playerChId") Long playerChId,@PathVariable(value="itemId") Long itemId, @RequestBody final PlayerCharacterItemDto playerCharacterItemDtoRequest){
             PlayerCharacterItemDto playerCharacterItemDtoResponse=playerCharacterItemService.addItemToPlayerCharacter(playerCharacterItemDtoRequest,playerChId,itemId);
             return ResponseEntity.ok(playerCharacterItemDtoResponse);
         }
+
+//        @PostMapping("/playercharacters/{playerChId}/items/{itemName}")
+//        public ResponseEntity<PlayerCharacterItemDto> addItemToPlayerCharacter(@PathVariable(value = "playerChId") Long playerChId,@PathVariable(value="itemName") String itemName, @RequestBody final PlayerCharacterItemDto playerCharacterItemDtoRequest){
+//            PlayerCharacterItemDto playerCharacterItemDtoResponse=playerCharacterItemService.addItemToPlayerCharacter(playerCharacterItemDtoRequest,playerChId,itemName);
+//            return ResponseEntity.ok(playerCharacterItemDtoResponse);
+//        }
+
 
         //add items to player character in bulk
         //id item, its extra stuff from intermediary table

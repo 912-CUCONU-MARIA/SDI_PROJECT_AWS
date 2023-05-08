@@ -1,13 +1,12 @@
 package com.example.lab1.service;
 
 import com.example.lab1.exception.MyException;
+import com.example.lab1.model.GameUser;
 import com.example.lab1.model.Item;
-import com.example.lab1.model.dto.GameUserDto;
-import com.example.lab1.model.dto.ItemDto;
-import com.example.lab1.model.dto.ItemNoPlayerCharacters;
-import com.example.lab1.model.dto.ItemNoPlayerCharactersSmol;
+import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.ItemRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 @Service
 public class ItemService {
@@ -105,6 +105,27 @@ public class ItemService {
         });
     }
 
+    public List<ItemNameEffectDto> searchItemsByName(String query) {
+        return itemRepository.findByItemNameContaining(query)
+                .stream()
+                .map(ItemNameEffectDto::from)
+                .collect(Collectors.toList());
+    }
 
+    public Page<ItemAveragePlayerCharacterLevelDto> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+        Page<Object[]> results = itemRepository.getItemsOrderedByAverageLevelOfPlayerCharacters(pageable);
+
+        List<ItemAveragePlayerCharacterLevelDto> sortedItemDtos = results.stream()
+                .map(result ->  ItemAveragePlayerCharacterLevelDto.builder()
+                            .id((Long) result[0])
+                            .itemName((String) result[1])
+                            .numberOfCopies((Long) result[2])
+                            .averageLevel(((Number) result[3]).longValue())
+                            .build()
+                    )
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(sortedItemDtos, pageable, results.getTotalElements());
+    }
 
 }

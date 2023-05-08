@@ -64,8 +64,9 @@ public class PlayerCharacterService {
         return PlayerCharacterDtoWUserObject.from(playerCharacterRepository.findById(id).orElseThrow(() -> new MyException(id.toString())));
     }
 
-    public List<PlayerCharacterDto> getPlayerCharactersLevelGreaterThan(Long level){
-        return playerCharacterRepository.findByLevelGreaterThan(level).stream().map(PlayerCharacterDto::from).collect(Collectors.toList());
+    public Page<PlayerCharacterNoItems> getPlayerCharactersLevelGreaterThan(Long level, Pageable pageable){
+        return playerCharacterRepository.findByLevelGreaterThan(level,pageable)
+                .map(PlayerCharacterNoItems::from);
     }
 
     public void deletePlayerCharacterByID(Long id) throws MyException {

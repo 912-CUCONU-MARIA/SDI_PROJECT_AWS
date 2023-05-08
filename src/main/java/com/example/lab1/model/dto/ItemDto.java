@@ -1,5 +1,7 @@
 package com.example.lab1.model.dto;
 import com.example.lab1.model.Item;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -7,14 +9,19 @@ public class ItemDto {
 
     private Long id;
 
+    @NotBlank(message = "itemName should not be blank")
     private String itemName;
 
+    @NotBlank(message = "itemRarity should not be blank")
     private String itemRarity;
 
+    @NotBlank(message = "itemType should not be blank")
     private String itemType;
 
+    @NotBlank(message = "itemEffect should not be blank")
     private String itemEffect;
 
+    @Min(value = 0, message = "Level should not be less than 0")
     private Long itemLevel;
 
     private String description;

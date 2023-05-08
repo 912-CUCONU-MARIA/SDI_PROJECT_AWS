@@ -4,14 +4,14 @@ import com.example.lab1.exception.MyException;
 import com.example.lab1.model.Item;
 import com.example.lab1.model.PlayerCharacter;
 import com.example.lab1.model.PlayerCharacterItem;
-import com.example.lab1.model.dto.PlayerCharacterDto;
-import com.example.lab1.model.dto.PlayerCharacterDtoWItemObject;
-import com.example.lab1.model.dto.PlayerCharacterItemDto;
+import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.ItemRepository;
 import com.example.lab1.repository.PlayerCharacterItemRepository;
 import com.example.lab1.repository.PlayerCharacterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,6 +56,28 @@ public class PlayerCharacterItemService {
 
     }
 
+//    @Transactional
+//    public PlayerCharacterItemDto addItemToPlayerCharacter(PlayerCharacterItemDto playerCharacterItemDto,Long idPlayerCharacter, String itemName){
+//
+//        PlayerCharacter playerCharacter=playerCharacterRepository.findById(idPlayerCharacter).orElseThrow();
+//        Item item=itemRepository.findByName(itemName).orElseThrow();
+//
+//        PlayerCharacterItem playerCharacterItem=PlayerCharacterItem.from(playerCharacterItemDto);
+//
+//        playerCharacterItem.setPlayerCharacter(playerCharacter);
+//        playerCharacterItem.setItem(item);
+//
+//        PlayerCharacterItem addedPlayerCharacterItem=playerCharacterItemRepository.save(playerCharacterItem);
+//        playerCharacter.getPlayerCharacterItemSet().add(addedPlayerCharacterItem);
+//        playerCharacter.setNumberOfItemsOwned(playerCharacter.getNumberOfItemsOwned()+1);
+//
+//        item.getPlayerCharacterItemSet().add(addedPlayerCharacterItem);
+//        item.setNumberOfCopies(item.getNumberOfCopies()+1);//
+//
+//        return PlayerCharacterItemDto.from(addedPlayerCharacterItem);
+//
+//    }
+
     public List<PlayerCharacterItemDto> addItemsToPlayerCharacter(List<PlayerCharacterItemDto> playerCharacterItemsDtos,Long idPlayerCharacter)
     {
         List<PlayerCharacterItemDto> returnedItemsList=new ArrayList<>();
@@ -87,6 +109,11 @@ GET /players/1/items //show player1 and his items ->RETURN A NEW DTO COMPOSED OF
         //Set<Item> items=playerCharacter.getPlayerCharacterItemSet().stream().map(PlayerCharacterItem::getItem).collect(Collectors.toSet());
 
         return PlayerCharacterDtoWItemObject.from(playerCharacter,playerCharacterItems);
+    }
+
+    public Page<ItemDtoWPlayerChItemObject> getPlayerCharacterAllItems(Long playerChId, Pageable pageable) {
+        Page<PlayerCharacterItem> playerCharacterItems = playerCharacterItemRepository.findAllByPlayerCharacterId(playerChId, pageable);
+        return playerCharacterItems.map(playerCharacterItem -> ItemDtoWPlayerChItemObject.from(playerCharacterItem.getItem(), playerCharacterItem));
     }
 
     @Transactional

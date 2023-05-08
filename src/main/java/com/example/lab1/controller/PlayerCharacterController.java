@@ -68,8 +68,19 @@ public class PlayerCharacterController {
     }
 
     @GetMapping("/playercharacters/levelGreaterThan/{level}")
-    public ResponseEntity<List<PlayerCharacterDto>> getPlayerCharacterBiggerLevel(@PathVariable(value = "level") Long level) throws MyException {
-        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersLevelGreaterThan(level));
+    public ResponseEntity<Page<PlayerCharacterNoItems>> getPlayerCharacterBiggerLevel(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sort", required = false) String sort,
+            @RequestParam(name = "direction",required = false) String direction,
+            @PathVariable(value = "level") Long level) throws MyException {
+        Pageable pageable;
+        if (sort != null && direction != null) {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString(direction), sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+        return ResponseEntity.ok(playerCharacterService.getPlayerCharactersLevelGreaterThan(level,pageable));
     }
 
     @PostMapping("/playercharacters")
