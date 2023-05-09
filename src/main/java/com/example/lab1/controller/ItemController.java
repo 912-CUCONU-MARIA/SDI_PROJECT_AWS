@@ -78,15 +78,14 @@ public class ItemController {
         return ResponseEntity.ok(items);
     }
 
-    @GetMapping("/averageplayercharacterlevel")
-    //sorted(Comparator.comparing(author->author.getNoBooks()))
-    //Show all Items ordered by the average level of the PlayerCharacters that own them
-    public ResponseEntity<Page<ItemAveragePlayerCharacterLevelDto>> getItemsOrderedByAverageLevelOfPlayerCharacters(
+    @GetMapping("/sortedbynumberofcopies")
+    //Show all Items ordered by the number of the PlayerCharacters that own them
+    public ResponseEntity<Page<ItemStatisticPlayerCharacterLevelDto>> getItemsOrderedByNumberOfCopies(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ){
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(itemService.getItemsOrderedByAverageLevelOfPlayerCharacters(pageable));
+        return ResponseEntity.ok(itemService.getItemsOrderedByNumberOfCopies(pageable));
     }
 
 }

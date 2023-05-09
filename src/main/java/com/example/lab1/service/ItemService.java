@@ -112,20 +112,25 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
-    public Page<ItemAveragePlayerCharacterLevelDto> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
-        Page<Object[]> results = itemRepository.getItemsOrderedByAverageLevelOfPlayerCharacters(pageable);
 
-        List<ItemAveragePlayerCharacterLevelDto> sortedItemDtos = results.stream()
-                .map(result ->  ItemAveragePlayerCharacterLevelDto.builder()
-                            .id((Long) result[0])
-                            .itemName((String) result[1])
-                            .numberOfCopies((Long) result[2])
-                            .averageLevel(((Number) result[3]).longValue())
-                            .build()
-                    )
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(sortedItemDtos, pageable, results.getTotalElements());
+    public Page<ItemStatisticPlayerCharacterLevelDto> getItemsOrderedByNumberOfCopies(Pageable pageable){
+        return itemRepository.findAllByOrderByNumberOfCopiesDesc(pageable)
+                .map(ItemStatisticPlayerCharacterLevelDto::from);
     }
+//    public Page<ItemStatisticPlayerCharacterLevelDto> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+//        Page<Object[]> results = itemRepository.getItemsOrderedByAverageLevelOfPlayerCharacters(pageable);
+//
+//        List<ItemStatisticPlayerCharacterLevelDto> sortedItemDtos = results.stream()
+//                .map(result ->  ItemStatisticPlayerCharacterLevelDto.builder()
+//                            .id((Long) result[0])
+//                            .itemName((String) result[1])
+//                            .numberOfCopies((Long) result[2])
+//                            .averageLevel(((Number) result[3]).longValue())
+//                            .build()
+//                    )
+//                .collect(Collectors.toList());
+//
+//        return new PageImpl<>(sortedItemDtos, pageable, results.getTotalElements());
+//    }
 
 }
