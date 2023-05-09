@@ -1,0 +1,2 @@
+ALTER TABLE game_user
+ADD COLUMN average_player_character_level REAL;

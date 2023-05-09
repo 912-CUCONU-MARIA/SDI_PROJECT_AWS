@@ -12,14 +12,14 @@ public class GameUserAveragePlayerCharacterLevelDto {
 
     private String firstName;
     private String lastName;
-    private Long averageLevel;
+    private Float averageLevel;
 
-    public static GameUserAveragePlayerCharacterLevelDto from(GameUser gameUser, Long averageLevel){
+    public static GameUserAveragePlayerCharacterLevelDto from(GameUser gameUser){
         return GameUserAveragePlayerCharacterLevelDto.builder()
                 .id(gameUser.getId())
                 .firstName(gameUser.getFirstName())
                 .lastName(gameUser.getLastName())
-                .averageLevel(averageLevel)
+                .averageLevel(gameUser.getAveragePlayerCharacterLevel())
                 .build();
     }
 

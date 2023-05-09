@@ -33,6 +33,8 @@ public class GameUser {
     @JsonManagedReference
     private Set<PlayerCharacter> playerCharacterSet;
 
+    private Float averagePlayerCharacterLevel;
+
     public GameUser() {
     }
 
@@ -107,6 +109,14 @@ public class GameUser {
         this.playerCharacterSet = playerCharacterSet.stream().collect(Collectors.toSet());
     }
 
+    public Float getAveragePlayerCharacterLevel() {
+        return averagePlayerCharacterLevel;
+    }
+
+    public void setAveragePlayerCharacterLevel(Float averagePlayerCharacterLevel) {
+        this.averagePlayerCharacterLevel = averagePlayerCharacterLevel;
+    }
+
     @Override
     public String toString() {
         return "GameUser{" +
@@ -117,6 +127,7 @@ public class GameUser {
                 ", activeStatus=" + activeStatus +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", averagePlayerCharacterLevel=" + averagePlayerCharacterLevel +
                 '}';
     }
 
@@ -129,6 +140,7 @@ public class GameUser {
         gameUser.setUsername(gameUserDto.getUsername());
         gameUser.setPassword(gameUserDto.getPassword());
         gameUser.setPlayerCharacterSet(new HashSet<>());
+        gameUser.setAveragePlayerCharacterLevel(0F);
         return gameUser;
     }
 
