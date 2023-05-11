@@ -1,23 +1,18 @@
 package com.example.lab1.service;
 
 import com.example.lab1.exception.MyException;
-import com.example.lab1.model.GameUser;
 import com.example.lab1.model.Item;
 import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.ItemRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 @Service
 public class ItemService {
@@ -113,15 +108,15 @@ public class ItemService {
     }
 
 
-    public Page<ItemStatisticPlayerCharacterLevelDto> getItemsOrderedByNumberOfCopies(Pageable pageable){
+    public Page<ItemStatisticPlayerCharacterDto> getItemsOrderedByNumberOfCopies(Pageable pageable){
         return itemRepository.findAllByOrderByNumberOfCopiesDesc(pageable)
-                .map(ItemStatisticPlayerCharacterLevelDto::from);
+                .map(ItemStatisticPlayerCharacterDto::from);
     }
-//    public Page<ItemStatisticPlayerCharacterLevelDto> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
+//    public Page<ItemStatisticPlayerCharacterDto> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
 //        Page<Object[]> results = itemRepository.getItemsOrderedByAverageLevelOfPlayerCharacters(pageable);
 //
-//        List<ItemStatisticPlayerCharacterLevelDto> sortedItemDtos = results.stream()
-//                .map(result ->  ItemStatisticPlayerCharacterLevelDto.builder()
+//        List<ItemStatisticPlayerCharacterDto> sortedItemDtos = results.stream()
+//                .map(result ->  ItemStatisticPlayerCharacterDto.builder()
 //                            .id((Long) result[0])
 //                            .itemName((String) result[1])
 //                            .numberOfCopies((Long) result[2])

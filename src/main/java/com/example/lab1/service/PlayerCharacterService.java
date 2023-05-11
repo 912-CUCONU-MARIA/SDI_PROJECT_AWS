@@ -29,17 +29,17 @@ public class PlayerCharacterService {
         this.gameUserRepository = gameUserRepository;
     }
 
+    @Transactional
     public PlayerCharacterDto addPlayerCharacter(PlayerCharacterDto playerCharacterDto){
-        //todo handle in case of error
-        //System.out.println(playerCharacterDto.toString());
         GameUser gameUser=gameUserRepository.findById(playerCharacterDto.getGameUserId()).orElseThrow();
-        //GameUser gameUser=gameUserRepository.getReferenceById(playerCharacterDto.getGameUserId());
-        //System.out.println(gameUser);
+
         PlayerCharacter playerCharacter=PlayerCharacter.from(playerCharacterDto);
         playerCharacter.setGameUser(gameUser);
         PlayerCharacter addedPlayerCharacter=playerCharacterRepository.save(playerCharacter);
+
         gameUser.getPlayerCharacterSet().add(addedPlayerCharacter);
-        //System.out.println(gameUser);
+        gameUser.setNumberOfPlayerCharacters(gameUser.getNumberOfPlayerCharacters()+1);
+
         return PlayerCharacterDto.from(addedPlayerCharacter);
     }
 
@@ -69,8 +69,16 @@ public class PlayerCharacterService {
                 .map(PlayerCharacterNoItems::from);
     }
 
+    @Transactional
     public void deletePlayerCharacterByID(Long id) throws MyException {
+        PlayerCharacter playerCharacter=playerCharacterRepository.findById(id).orElseThrow();
+
         playerCharacterRepository.delete(playerCharacterRepository.findById(id).orElseThrow(() -> new MyException(id.toString())));
+
+        GameUser gameUser=playerCharacter.getGameUser();
+        gameUser.getPlayerCharacterSet().remove(playerCharacter);
+        gameUser.setNumberOfPlayerCharacters(gameUser.getNumberOfPlayerCharacters()-1);
+
     }
 
     public void deletePlayerCharacters(){

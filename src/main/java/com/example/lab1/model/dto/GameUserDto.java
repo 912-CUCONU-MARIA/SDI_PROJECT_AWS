@@ -37,7 +37,7 @@ public class GameUserDto {
         //                                                        .map(PlayerCharacter::getId)
         //                                                        .collect(Collectors.toSet()));
         ////gameUserDto.setPlayerCharacterDtos(gameUser.getPlayerCharacterSet().stream().map(PlayerCharacterDto::from).collect(Collectors.toSet()));
-        gameUserDto.setNumberOfPlayerCharacters((long) gameUser.getPlayerCharacterSet().size());
+        gameUserDto.setNumberOfPlayerCharacters(gameUser.getNumberOfPlayerCharacters());
 
         return gameUserDto;
     }

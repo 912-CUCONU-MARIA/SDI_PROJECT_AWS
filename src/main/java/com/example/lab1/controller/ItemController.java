@@ -80,7 +80,7 @@ public class ItemController {
 
     @GetMapping("/sortedbynumberofcopies")
     //Show all Items ordered by the number of the PlayerCharacters that own them
-    public ResponseEntity<Page<ItemStatisticPlayerCharacterLevelDto>> getItemsOrderedByNumberOfCopies(
+    public ResponseEntity<Page<ItemStatisticPlayerCharacterDto>> getItemsOrderedByNumberOfCopies(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ){

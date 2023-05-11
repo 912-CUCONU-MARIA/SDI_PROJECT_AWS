@@ -21,7 +21,7 @@ public class GameUserAveragePlayerCharacterLevelDto {
                 .firstName(gameUser.getFirstName())
                 .lastName(gameUser.getLastName())
                 .averageLevel(gameUser.getAveragePlayerCharacterLevel())
-                .numberOfPlayerCharacters((long) gameUser.getPlayerCharacterSet().size())
+                .numberOfPlayerCharacters(gameUser.getNumberOfPlayerCharacters())
                 .build();
     }
 

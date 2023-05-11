@@ -5,12 +5,16 @@ import com.example.lab1.model.dto.GameUserDtoWPlayerChObject;
 import com.example.lab1.model.dto.PlayerCharacterDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Getter
+@Setter
 public class GameUser {
 
     @Id
@@ -35,6 +39,8 @@ public class GameUser {
 
     private Float averagePlayerCharacterLevel;
 
+    private Long numberOfPlayerCharacters;
+
     public GameUser() {
     }
 
@@ -48,74 +54,74 @@ public class GameUser {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public String getFirstName() {
+//        return firstName;
+//    }
+//
+//    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
+//    }
+//
+//    public String getLastName() {
+//        return lastName;
+//    }
+//
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
+//
+//    public String getEmailAddress() {return emailAddress;}
+//
+//    public void setEmailAddress(String emailAddress) {this.emailAddress = emailAddress;}
+//
+//    public Boolean getActiveStatus() {
+//        return activeStatus;
+//    }
+//
+//    public void setActiveStatus(Boolean activeStatus) {
+//        this.activeStatus = activeStatus;
+//    }
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
+//
+//    public Set<PlayerCharacter> getPlayerCharacterSet() {
+//        return playerCharacterSet;
+//    }
+//
+//    public void setPlayerCharacterSet(Set<PlayerCharacter> playerCharacterSet) {
+//        this.playerCharacterSet = playerCharacterSet.stream().collect(Collectors.toSet());
+//    }
+//
+//    public Float getAveragePlayerCharacterLevel() {
+//        return averagePlayerCharacterLevel;
+//    }
+//
+//    public void setAveragePlayerCharacterLevel(Float averagePlayerCharacterLevel) {
+//        this.averagePlayerCharacterLevel = averagePlayerCharacterLevel;
+//    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmailAddress() {return emailAddress;}
-
-    public void setEmailAddress(String emailAddress) {this.emailAddress = emailAddress;}
-
-    public Boolean getActiveStatus() {
-        return activeStatus;
-    }
-
-    public void setActiveStatus(Boolean activeStatus) {
-        this.activeStatus = activeStatus;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public Set<PlayerCharacter> getPlayerCharacterSet() {
-        return playerCharacterSet;
-    }
-
-    public void setPlayerCharacterSet(Set<PlayerCharacter> playerCharacterSet) {
-        this.playerCharacterSet = playerCharacterSet.stream().collect(Collectors.toSet());
-    }
-
-    public Float getAveragePlayerCharacterLevel() {
-        return averagePlayerCharacterLevel;
-    }
-
-    public void setAveragePlayerCharacterLevel(Float averagePlayerCharacterLevel) {
-        this.averagePlayerCharacterLevel = averagePlayerCharacterLevel;
-    }
 
     @Override
     public String toString() {
@@ -127,7 +133,9 @@ public class GameUser {
                 ", activeStatus=" + activeStatus +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", playerCharacterSet=" + playerCharacterSet +
                 ", averagePlayerCharacterLevel=" + averagePlayerCharacterLevel +
+                ", numberOfPlayerCharacters=" + numberOfPlayerCharacters +
                 '}';
     }
 
@@ -141,6 +149,7 @@ public class GameUser {
         gameUser.setPassword(gameUserDto.getPassword());
         gameUser.setPlayerCharacterSet(new HashSet<>());
         gameUser.setAveragePlayerCharacterLevel(0F);
+        gameUser.setNumberOfPlayerCharacters(0L);
         return gameUser;
     }
 
