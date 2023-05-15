@@ -39,7 +39,7 @@ public class GameUserService {
 
     //this with pages
     public Page<GameUserDto> getGameUsersDto(Pageable pageable){
-        return gameUserRepository.findAll(pageable)
+        return gameUserRepository.findAllByOrderByIdAsc(pageable)
                 .map(GameUserDto::from);
     }
 

@@ -35,6 +35,8 @@ public interface GameUserRepository extends JpaRepository<GameUser,Long> {
 //            nativeQuery = true)
 //    Page<Object[]> getGameUsersOrderedByAverageLevelOfPlayerCharacters(Pageable pageable);
 
+    Page<GameUser>findAllByOrderByIdAsc(Pageable pageable);
+
     Page<GameUser>findAllByOrderByAveragePlayerCharacterLevelAsc(Pageable pageable);
 
 }
