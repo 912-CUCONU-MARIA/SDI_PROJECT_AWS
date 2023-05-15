@@ -27,4 +27,6 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 
         Page<Item> findAllByOrderByNumberOfCopiesDesc(Pageable pageable);
 
+        Page<Item>findAllByOrderByIdAsc(Pageable pageable);
+
 }

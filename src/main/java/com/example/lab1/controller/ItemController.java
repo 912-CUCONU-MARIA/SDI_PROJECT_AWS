@@ -67,10 +67,10 @@ public class ItemController {
     @DeleteMapping()
     void deleteAllItems(){itemService.deleteItems();}
 
-    @PutMapping()
-    void addCount(){
-        itemService.setCount();
-    }
+//    @PutMapping()
+//    void addCount(){
+//        itemService.setCount();
+//    }
 
     @GetMapping("/search")
     public ResponseEntity<List<ItemNameEffectDto>> searchItems(@RequestParam String name) {

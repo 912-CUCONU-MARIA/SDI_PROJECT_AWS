@@ -44,7 +44,7 @@ public class PlayerCharacterService {
     }
 
     public Page<PlayerCharacterNoItems> getPlayerCharactersDto(Pageable pageable){
-        return playerCharacterRepository.findAll(pageable)
+        return playerCharacterRepository.findAllByOrderByIdAsc(pageable)
                 .map(PlayerCharacterNoItems::from);
     }
 

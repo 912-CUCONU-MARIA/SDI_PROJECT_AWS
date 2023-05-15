@@ -27,7 +27,7 @@ public class ItemService {
     }
 
     public Page<ItemNoPlayerCharacters> getItemsDto(Pageable pageable){
-        return itemRepository.findAll(pageable)
+        return itemRepository.findAllByOrderByIdAsc(pageable)
                 .map(ItemNoPlayerCharacters::from);
     }
 
