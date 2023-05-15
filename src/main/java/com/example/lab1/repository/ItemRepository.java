@@ -25,7 +25,7 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 //                nativeQuery = true)
 //        Page<Object[]> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable);
 
-        Page<Item> findAllByOrderByNumberOfCopiesDesc(Pageable pageable);
+        Page<Item> findAllByOrderByNumberOfCopiesAsc(Pageable pageable);
 
         Page<Item>findAllByOrderByIdAsc(Pageable pageable);
 

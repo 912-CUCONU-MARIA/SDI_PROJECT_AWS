@@ -109,7 +109,7 @@ public class ItemService {
 
 
     public Page<ItemStatisticPlayerCharacterDto> getItemsOrderedByNumberOfCopies(Pageable pageable){
-        return itemRepository.findAllByOrderByNumberOfCopiesDesc(pageable)
+        return itemRepository.findAllByOrderByNumberOfCopiesAsc(pageable)
                 .map(ItemStatisticPlayerCharacterDto::from);
     }
 //    public Page<ItemStatisticPlayerCharacterDto> getItemsOrderedByAverageLevelOfPlayerCharacters(Pageable pageable) {
