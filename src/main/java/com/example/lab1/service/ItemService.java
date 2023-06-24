@@ -4,7 +4,7 @@ import com.example.lab1.exception.MyException;
 import com.example.lab1.model.Item;
 import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.ItemRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

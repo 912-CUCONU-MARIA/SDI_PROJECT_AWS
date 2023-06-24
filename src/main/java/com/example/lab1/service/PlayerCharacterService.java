@@ -7,7 +7,7 @@ import com.example.lab1.model.PlayerCharacterItem;
 import com.example.lab1.model.dto.*;
 import com.example.lab1.repository.GameUserRepository;
 import com.example.lab1.repository.PlayerCharacterRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

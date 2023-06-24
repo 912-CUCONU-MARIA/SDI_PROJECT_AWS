@@ -3,7 +3,7 @@ package com.example.lab1.controller;
 import com.example.lab1.exception.MyException;
 import com.example.lab1.model.dto.*;
 import com.example.lab1.service.ItemService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
