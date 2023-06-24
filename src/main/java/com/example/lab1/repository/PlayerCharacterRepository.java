@@ -12,4 +12,7 @@ import java.util.List;
 public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter,Long> {
 
     Page<PlayerCharacter> findByLevelGreaterThan(Long level, Pageable pageable);
+
+    Page<PlayerCharacter>findAllByOrderByIdAsc(Pageable pageable);
+
 }

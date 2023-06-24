@@ -125,9 +125,9 @@ public class PlayerCharacterController {
 //        return errors;
 //    }
 
-    @PutMapping("/playercharacters")
-    void addCount(){
-        playerCharacterService.setCount();
-    }
+//    @PutMapping("/playercharacters")
+//    void addCount(){
+//        playerCharacterService.setCount();
+//    }
 
 }
