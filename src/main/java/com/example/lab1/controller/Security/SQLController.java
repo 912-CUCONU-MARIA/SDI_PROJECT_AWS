@@ -18,7 +18,7 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "https://lively-mochi-dbc1b6.netlify.app"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
 @Validated

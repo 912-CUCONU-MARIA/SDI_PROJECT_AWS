@@ -2,7 +2,7 @@ package com.example.lab1.model;
 
 import com.example.lab1.model.dto.PlayerCharacterItemDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

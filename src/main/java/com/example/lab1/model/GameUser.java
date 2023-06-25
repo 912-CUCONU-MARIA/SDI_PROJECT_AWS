@@ -1,16 +1,13 @@
 package com.example.lab1.model;
 
 import com.example.lab1.model.dto.GameUserDto;
-import com.example.lab1.model.dto.GameUserDtoWPlayerChObject;
-import com.example.lab1.model.dto.PlayerCharacterDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -33,7 +30,7 @@ public class GameUser {
     private String password;
 
 
-    @OneToMany(mappedBy="gameUser" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "gameUser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<PlayerCharacter> playerCharacterSet;
 
@@ -139,8 +136,8 @@ public class GameUser {
                 '}';
     }
 
-    public static GameUser from(GameUserDto gameUserDto){
-        GameUser gameUser=new GameUser();
+    public static GameUser from(GameUserDto gameUserDto) {
+        GameUser gameUser = new GameUser();
         gameUser.setFirstName(gameUserDto.getFirstName());
         gameUser.setLastName(gameUserDto.getLastName());
         gameUser.setEmailAddress(gameUserDto.getEmailAddress());

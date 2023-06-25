@@ -2,8 +2,8 @@ package com.example.lab1.model;
 
 import com.example.lab1.model.dto.ItemDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;

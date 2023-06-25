@@ -1,7 +1,7 @@
 package com.example.lab1.model.dto;
 import com.example.lab1.model.Item;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data

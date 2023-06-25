@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "https://lively-mochi-dbc1b6.netlify.app"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
 @Validated

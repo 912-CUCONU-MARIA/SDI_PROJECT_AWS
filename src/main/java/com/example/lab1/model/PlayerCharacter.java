@@ -3,11 +3,12 @@ package com.example.lab1.model;
 import com.example.lab1.model.dto.PlayerCharacterDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,13 +33,13 @@ public class PlayerCharacter {
 
     private Long classId;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
-    @JoinColumn(name="gameUser_id", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "gameUser_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     private GameUser gameUser;
 
-    @OneToMany(mappedBy="playerCharacter" ,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "playerCharacter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<PlayerCharacterItem> playerCharacterItemSet;
 
@@ -52,7 +53,7 @@ public class PlayerCharacter {
         this.level = level;
         this.experience = experience;
         this.classId = classId;
-        this.gameUser=gameUser;
+        this.gameUser = gameUser;
     }
 
     public Long getId() {
@@ -132,9 +133,9 @@ public class PlayerCharacter {
                 '}';
     }
 
-    public static PlayerCharacter from(PlayerCharacterDto playerCharacterDto){
+    public static PlayerCharacter from(PlayerCharacterDto playerCharacterDto) {
 
-        PlayerCharacter playerCharacter=new PlayerCharacter();
+        PlayerCharacter playerCharacter = new PlayerCharacter();
         //playerCharacter.setId(playerCharacterDto.getId());
         playerCharacter.setPc_name(playerCharacterDto.getPc_name());
         playerCharacter.setLevel(playerCharacterDto.getLevel());
@@ -146,7 +147,6 @@ public class PlayerCharacter {
         return playerCharacter;
 
     }
-
 
 
 }
