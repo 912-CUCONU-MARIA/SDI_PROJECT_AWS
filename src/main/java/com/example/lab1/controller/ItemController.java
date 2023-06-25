@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200", "http://localhost:8080/swagger-ui.html"})
 @RestController
 @RequestMapping("/api/items")
 public class ItemController {

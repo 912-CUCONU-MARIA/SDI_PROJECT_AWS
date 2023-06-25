@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200", "http://localhost:8080/swagger-ui.html"})
 @RestController
 //@RequestMapping("/playercharacters")
 @RequestMapping("/api")

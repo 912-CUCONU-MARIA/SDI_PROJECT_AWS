@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 //@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "https://lively-mochi-dbc1b6.netlify.app"})
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://http://localhost:4200"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200", "http://localhost:8080/swagger-ui.html"})
 
 @RestController
 @RequestMapping("/api")

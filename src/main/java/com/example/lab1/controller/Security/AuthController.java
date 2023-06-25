@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://http://localhost:4200"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200", "http://localhost:8080/swagger-ui.html"})
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @Validated
 public class AuthController {
     AuthenticationManager authenticationManager;
@@ -76,9 +76,9 @@ public class AuthController {
         String password = signUpRequest.getPassword();
         String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
-        if (!password.matches(pattern)) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character (@#$%^&+=)."));
-        }
+//        if (!password.matches(pattern)) {
+//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, and one special character (@#$%^&+=)."));
+//        }
 
         String jwtToken = jwtUtils.generateTokenFromUsernameRegister(signUpRequest.getUsername()).getValue();
 

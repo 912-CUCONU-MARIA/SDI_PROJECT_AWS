@@ -18,7 +18,7 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:8080", "http://localhost:4200", "http://localhost:8080/swagger-ui.html"})
 @RestController
 @RequestMapping("/api")
 @Validated
